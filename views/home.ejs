@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMS Adam Forms</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            background: #111827;
+            color: #ffffff;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 520px;
+            padding: 40px;
+            text-align: center;
+            border-radius: 18px;
+            background: #1f2937;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 34px;
+        }
+
+        p {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .discord-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 14px 24px;
+            border-radius: 10px;
+            background: #5865f2;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .discord-button:hover {
+            background: #4752c4;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h1>EMS Adam Forms</h1>
+
+        <p>
+            Система подачи заявлений для проекта.
+            Для продолжения необходимо войти через Discord.
+        </p>
+
+        <a class="discord-button" href="/auth/discord">
+            Войти через Discord
+        </a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подача заявления</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #111827;
+            color: #ffffff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .card {
+            padding: 30px;
+            border-radius: 18px;
+            background: #1f2937;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        .user-info {
+            margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #111827;
+            color: #cbd5e1;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            background: #111827;
+            color: #ffffff;
+            font-size: 16px;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        button,
+        .back-button {
+            padding: 13px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        button {
+            background: #22c55e;
+            color: #ffffff;
+        }
+
+        button:hover {
+            background: #16a34a;
+        }
+
+        .back-button {
+            background: #374151;
+            color: #ffffff;
+        }
+
+        .back-button:hover {
+            background: #4b5563;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>Подача заявления</h1>
+
+            <div class="user-info">
+                <p>
+                    <strong>Discord:</strong>
+                    <%= user.global_name || user.username %>
+                </p>
+
+                <p>
+                    <strong>Discord ID:</strong>
+                    <%= user.id %>
+                </p>
+            </div>
+
+            <form action="/application" method="POST">
+                <div class="field">
+                    <label for="characterName">Имя и фамилия персонажа</label>
+                    <input
+                        id="characterName"
+                        name="characterName"
+                        type="text"
+                        required
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="age">Возраст персонажа</label>
+                    <input
+                        id="age"
+                        name="age"
+                        type="number"
+                        min="18"
+                        max="100"
+                        required
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="phone">Номер телефона персонажа</label>
+                    <input
+                        id="phone"
+                        name="phone"
+                        type="text"
+                        required
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="department">Желаемое направление</label>
+                    <select id="department" name="department" required>
+                        <option value="">Выберите направление</option>
+                        <option value="EMS">EMS</option>
+                        <option value="Fire Department">Fire Department</option>
+                        <option value="Administration">Administration</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="experience">Опыт работы</label>
+                    <textarea
+                        id="experience"
+                        name="experience"
+                        required
+                    ></textarea>
+                </div>
+
+                <div class="field">
+                    <label for="motivation">Почему вы хотите вступить?</label>
+                    <textarea
+                        id="motivation"
+                        name="motivation"
+                        required
+                    ></textarea>
+                </div>
+
+                <div class="field">
+                    <label for="timezone">Ваш часовой пояс</label>
+                    <input
+                        id="timezone"
+                        name="timezone"
+                        type="text"
+                        placeholder="Например: UTC+3"
+                        required
+                    >
+                </div>
+
+                <div class="actions">
+                    <button type="submit">
+                        Отправить заявление
+                    </button>
+
+                    <a class="back-button" href="/dashboard">
+                        Назад
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

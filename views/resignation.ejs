@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Заявление на увольнение</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #111827;
+            color: #ffffff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .card {
+            padding: 30px;
+            border-radius: 18px;
+            background: #1f2937;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        .description {
+            color: #cbd5e1;
+            margin-bottom: 25px;
+        }
+
+        .user-info {
+            margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #111827;
+            color: #cbd5e1;
+        }
+
+        .user-info p {
+            margin: 6px 0;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .optional {
+            font-weight: normal;
+            color: #94a3b8;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            background: #111827;
+            color: #ffffff;
+            font-size: 16px;
+        }
+
+        textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: 2px solid #ef4444;
+            border-color: transparent;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        button,
+        .back-button {
+            padding: 13px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        button {
+            background: #dc2626;
+            color: #ffffff;
+        }
+
+        button:hover {
+            background: #b91c1c;
+        }
+
+        .back-button {
+            background: #374151;
+            color: #ffffff;
+        }
+
+        .back-button:hover {
+            background: #4b5563;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>Заявление на увольнение</h1>
+
+            <p class="description">
+                Заполните форму для подачи заявления на увольнение.
+            </p>
+
+            <div class="user-info">
+                <p>
+                    <strong>Discord:</strong>
+                    <%= user.global_name || user.username %>
+                </p>
+
+                <p>
+                    <strong>Discord ID:</strong>
+                    <%= user.id %>
+                </p>
+            </div>
+
+            <form action="/auth/resignation" method="POST">
+                <div class="field">
+                    <label for="characterInfo">
+                        Фамилия Имя | Статик
+                    </label>
+
+                    <input
+                        id="characterInfo"
+                        name="characterInfo"
+                        type="text"
+                        maxlength="150"
+                        placeholder="Например: Adam Smith | 358187"
+                        required
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="rank">
+                        Ранг при увольнении
+                        <span class="optional">(необязательно)</span>
+                    </label>
+
+                    <input
+                        id="rank"
+                        name="rank"
+                        type="text"
+                        maxlength="100"
+                        placeholder="Например: 8"
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="reason">
+                        Причина увольнения
+                    </label>
+
+                    <textarea
+                        id="reason"
+                        name="reason"
+                        maxlength="1000"
+                        placeholder="Укажите причину увольнения"
+                        required
+                    ></textarea>
+                </div>
+
+                <div class="field">
+                    <label for="activeReprimand">
+                        Имеется ли активный выговор?
+                    </label>
+
+                    <select
+                        id="activeReprimand"
+                        name="activeReprimand"
+                        required
+                    >
+                        <option value="">
+                            Выберите ответ
+                        </option>
+
+                        <option value="Нет">
+                            Нет
+                        </option>
+
+                        <option value="Да">
+                            Да
+                        </option>
+                    </select>
+                </div>
+
+                <div class="actions">
+                    <button type="submit">
+                        Отправить заявление
+                    </button>
+
+                    <a class="back-button" href="/dashboard">
+                        Назад
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
