@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title><%= config.title %> — EMS Forms Portal</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: #ffffff;
+            background:
+                radial-gradient(
+                    circle at top,
+                    rgba(37, 99, 235, 0.2),
+                    transparent 34%
+                ),
+                #0f172a;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 40px 20px 60px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .back-link {
+            color: #93c5fd;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: #dbeafe;
+        }
+
+        .user-name {
+            color: #cbd5e1;
+            font-size: 14px;
+            text-align: right;
+        }
+
+        .form-card {
+            padding: 32px;
+            border: 1px solid rgba(148, 163, 184, 0.16);
+            border-radius: 20px;
+            background: rgba(30, 41, 59, 0.95);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-header {
+            margin-bottom: 28px;
+        }
+
+        .form-header h1 {
+            margin: 0 0 10px;
+            font-size: 30px;
+            line-height: 1.2;
+        }
+
+        .form-header p {
+            margin: 0;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .message {
+            margin-bottom: 22px;
+            padding: 14px 16px;
+            border-radius: 11px;
+            line-height: 1.5;
+        }
+
+        .message-success {
+            border: 1px solid rgba(34, 197, 94, 0.45);
+            background: rgba(34, 197, 94, 0.14);
+            color: #bbf7d0;
+        }
+
+        .message-error {
+            border: 1px solid rgba(239, 68, 68, 0.45);
+            background: rgba(239, 68, 68, 0.14);
+            color: #fecaca;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #e2e8f0;
+            font-weight: bold;
+        }
+
+        .required {
+            color: #f87171;
+        }
+
+        input,
+        select,
+        textarea {
+            display: block;
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #475569;
+            border-radius: 10px;
+            outline: none;
+            background: #0f172a;
+            color: #ffffff;
+            font: inherit;
+            transition: 0.2s ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.16);
+        }
+
+        select option {
+            background: #0f172a;
+            color: #ffffff;
+        }
+
+        textarea {
+            min-height: 145px;
+            resize: vertical;
+        }
+
+        .field-hint {
+            margin: 8px 0 0;
+            color: #94a3b8;
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        .rank-notice {
+            display: none;
+            margin-top: 10px;
+            padding: 12px 13px;
+            border: 1px solid rgba(250, 204, 21, 0.4);
+            border-radius: 9px;
+            background: rgba(250, 204, 21, 0.1);
+            color: #fde68a;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 14px 20px;
+            border: 0;
+            border-radius: 11px;
+            cursor: pointer;
+            background: #2563eb;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.2s ease;
+        }
+
+        .submit-button:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .submit-button:disabled {
+            cursor: not-allowed;
+            opacity: 0.65;
+            transform: none;
+        }
+
+        @media (max-width: 650px) {
+            .container {
+                padding: 24px 14px 40px;
+            }
+
+            .form-card {
+                padding: 24px 18px;
+            }
+
+            .row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .user-name {
+                text-align: left;
+            }
+
+            .form-header h1 {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <div class="topbar">
+            <a class="back-link" href="/dashboard">
+                ← Вернуться в личный кабинет
+            </a>
+
+            <div class="user-name">
+                <%= user.global_name || user.username %>
+            </div>
+        </div>
+
+        <section class="form-card">
+            <header class="form-header">
+                <h1><%= config.title %></h1>
+
+                <p>
+                    <%= config.description %>
+                    После отправки заявление автоматически поступит
+                    в соответствующий Discord-канал.
+                </p>
+            </header>
+
+            <% if (success) { %>
+                <div class="message message-success">
+                    ✓ Заявление успешно отправлено в Discord.
+                </div>
+            <% } %>
+
+            <% if (error) { %>
+                <div class="message message-error">
+                    <%= error %>
+                </div>
+            <% } %>
+
+            <form
+                id="vacationForm"
+                method="POST"
+                action="/forms/<%= config.slug %>"
+            >
+                <div class="field">
+                    <label for="characterInfo">
+                        Имя Фамилия | Статик
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        id="characterInfo"
+                        name="characterInfo"
+                        type="text"
+                        maxlength="150"
+                        placeholder="Например: Adam Smith | 12345"
+                        value="<%= formData.characterInfo || '' %>"
+                        autocomplete="off"
+                        required
+                    >
+
+                    <p class="field-hint">
+                        Укажите имя персонажа, фамилию и статический ID.
+                    </p>
+                </div>
+
+                <div class="row">
+                    <div class="field">
+                        <label for="department">
+                            Отдел
+                            <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="department"
+                            name="department"
+                            required
+                        >
+                            <option value="">
+                                Выберите отдел
+                            </option>
+
+                            <% departments.forEach((department) => { %>
+                                <option
+                                    value="<%= department %>"
+                                    <%=
+                                        formData.department === department
+                                            ? "selected"
+                                            : ""
+                                    %>
+                                >
+                                    <%= department %>
+                                </option>
+                            <% }); %>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="rank">
+                            Ранг
+                            <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="rank"
+                            name="rank"
+                            required
+                        >
+                            <option value="">
+                                Выберите ранг
+                            </option>
+
+                            <% ranks.forEach((rankItem) => { %>
+                                <option
+                                    value="<%= rankItem.value %>"
+                                    <%=
+                                        String(formData.rank || "") ===
+                                        String(rankItem.value)
+                                            ? "selected"
+                                            : ""
+                                    %>
+                                >
+                                    <%= rankItem.label %>
+                                </option>
+                            <% }); %>
+                        </select>
+
+                        <div
+                            id="rankNotice"
+                            class="rank-notice"
+                        >
+                            Для рангов 11–13 уведомление получат только
+                            Главный врач и Заместитель Главного врача.
+                            Роли выбранного отдела упоминаться не будут.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="field">
+                        <label for="startDate">
+                            Дата начала
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            id="startDate"
+                            name="startDate"
+                            type="date"
+                            value="<%= formData.startDate || '' %>"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="endDate">
+                            Дата окончания
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            id="endDate"
+                            name="endDate"
+                            type="date"
+                            value="<%= formData.endDate || '' %>"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="reason">
+                        Причина
+                        <span class="required">*</span>
+                    </label>
+
+                    <textarea
+                        id="reason"
+                        name="reason"
+                        maxlength="1000"
+                        placeholder="Подробно укажите причину отпуска"
+                        required
+                    ><%= formData.reason || "" %></textarea>
+
+                    <p class="field-hint">
+                        Максимальная длина — 1000 символов.
+                    </p>
+                </div>
+
+                <button
+                    id="submitButton"
+                    class="submit-button"
+                    type="submit"
+                >
+                    Отправить заявление
+                </button>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        const vacationForm =
+            document.getElementById("vacationForm");
+
+        const submitButton =
+            document.getElementById("submitButton");
+
+        const startDateInput =
+            document.getElementById("startDate");
+
+        const endDateInput =
+            document.getElementById("endDate");
+
+        const rankSelect =
+            document.getElementById("rank");
+
+        const rankNotice =
+            document.getElementById("rankNotice");
+
+        function updateEndDateMinimum() {
+            endDateInput.min = startDateInput.value;
+
+            if (
+                startDateInput.value &&
+                endDateInput.value &&
+                endDateInput.value < startDateInput.value
+            ) {
+                endDateInput.value = startDateInput.value;
+            }
+        }
+
+        function updateRankNotice() {
+            const selectedRank = Number(rankSelect.value);
+
+            rankNotice.style.display =
+                selectedRank >= 11 && selectedRank <= 13
+                    ? "block"
+                    : "none";
+        }
+
+        startDateInput.addEventListener(
+            "change",
+            updateEndDateMinimum
+        );
+
+        rankSelect.addEventListener(
+            "change",
+            updateRankNotice
+        );
+
+        vacationForm.addEventListener("submit", () => {
+            submitButton.disabled = true;
+            submitButton.textContent = "Отправка...";
+        });
+
+        updateEndDateMinimum();
+        updateRankNotice();
+    </script>
+</body>
+</html>
