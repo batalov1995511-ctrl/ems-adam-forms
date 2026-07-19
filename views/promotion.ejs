@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Запрос на повышение | EMS Adam Forms</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background: #070b12;
+            --panel: rgba(17, 24, 39, 0.94);
+            --panel-secondary: rgba(30, 41, 59, 0.75);
+            --border: rgba(148, 163, 184, 0.2);
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --accent: #22c55e;
+            --accent-hover: #16a34a;
+            --danger: #ef4444;
+            --success: #22c55e;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 32px 16px;
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(
+                    circle at top,
+                    rgba(34, 197, 94, 0.12),
+                    transparent 38%
+                ),
+                var(--background);
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 820px;
+            margin: 0 auto;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            text-decoration: none;
+            transition:
+                color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--text);
+            transform: translateX(-2px);
+        }
+
+        .brand {
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
+        .form-card {
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            background: var(--panel);
+            box-shadow:
+                0 24px 70px rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(18px);
+        }
+
+        .form-header {
+            padding: 34px;
+            border-bottom: 1px solid var(--border);
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(34, 197, 94, 0.15),
+                    rgba(15, 23, 42, 0.2)
+                );
+        }
+
+        .form-icon {
+            display: grid;
+            width: 56px;
+            height: 56px;
+            margin-bottom: 18px;
+            place-items: center;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 16px;
+            background: rgba(34, 197, 94, 0.12);
+            font-size: 28px;
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            font-size: clamp(28px, 5vw, 42px);
+            line-height: 1.1;
+        }
+
+        .subtitle {
+            max-width: 620px;
+            margin: 0;
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .form-body {
+            padding: 34px;
+        }
+
+        .alert {
+            margin-bottom: 24px;
+            padding: 15px 17px;
+            border-radius: 13px;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .alert-error {
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            color: #fecaca;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .alert-success {
+            border: 1px solid rgba(34, 197, 94, 0.35);
+            color: #bbf7d0;
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .field-full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .required {
+            color: #f87171;
+        }
+
+        .field-description {
+            margin: -2px 0 2px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        input,
+        select {
+            width: 100%;
+            min-height: 50px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            outline: none;
+            color: var(--text);
+            background: var(--panel-secondary);
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
+        }
+
+        input {
+            padding: 0 15px;
+        }
+
+        select {
+            padding: 0 42px 0 15px;
+            cursor: pointer;
+        }
+
+        select option {
+            color: #111827;
+            background: #ffffff;
+        }
+
+        input::placeholder {
+            color: #64748b;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: rgba(34, 197, 94, 0.75);
+            background: rgba(30, 41, 59, 0.95);
+            box-shadow:
+                0 0 0 4px rgba(34, 197, 94, 0.12);
+        }
+
+        select:disabled {
+            cursor: not-allowed;
+            opacity: 0.68;
+        }
+
+        .rank-notice {
+            display: none;
+            grid-column: 1 / -1;
+            padding: 14px 16px;
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            border-radius: 13px;
+            color: #fde68a;
+            background: rgba(245, 158, 11, 0.1);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .rank-notice.visible {
+            display: block;
+        }
+
+        .form-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 30px;
+            padding-top: 26px;
+            border-top: 1px solid var(--border);
+        }
+
+        .button {
+            display: inline-flex;
+            min-height: 48px;
+            padding: 0 22px;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            border-radius: 13px;
+            cursor: pointer;
+            font-weight: 800;
+            text-decoration: none;
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                opacity 0.2s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-1px);
+        }
+
+        .button-secondary {
+            color: var(--text);
+            background: rgba(148, 163, 184, 0.12);
+        }
+
+        .button-submit {
+            color: #052e16;
+            background: var(--accent);
+        }
+
+        .button-submit:hover {
+            background: var(--accent-hover);
+        }
+
+        .button-submit:disabled {
+            cursor: not-allowed;
+            opacity: 0.45;
+            transform: none;
+        }
+
+        @media (max-width: 680px) {
+            body {
+                padding: 18px 12px;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .form-header,
+            .form-body {
+                padding: 24px 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .field-full,
+            .rank-notice {
+                grid-column: auto;
+            }
+
+            .form-actions {
+                align-items: stretch;
+                flex-direction: column-reverse;
+            }
+
+            .button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="page">
+        <div class="topbar">
+            <a class="back-link" href="/dashboard">
+                ← Вернуться в личный кабинет
+            </a>
+
+            <div class="brand">
+                EMS ADAM FORMS
+            </div>
+        </div>
+
+        <section class="form-card">
+            <header class="form-header">
+                <div class="form-icon">📈</div>
+
+                <h1>Запрос на повышение</h1>
+
+                <p class="subtitle">
+                    Заполните заявление на рассмотрение повышения.
+                    Запрашиваемый ранг определяется автоматически
+                    и может быть только следующим после текущего.
+                </p>
+            </header>
+
+            <div class="form-body">
+                <% if (error) { %>
+                    <div
+                        class="alert alert-error"
+                        role="alert"
+                    >
+                        <%= error %>
+                    </div>
+                <% } %>
+
+                <% if (success) { %>
+                    <div
+                        class="alert alert-success"
+                        role="status"
+                    >
+                        <%= success %>
+                    </div>
+                <% } %>
+
+                <form
+                    id="promotionForm"
+                    method="POST"
+                    action="/forms/promotion"
+                >
+                    <div class="form-grid">
+                        <div class="field field-full">
+                            <label for="fullName">
+                                Фамилия Имя | Статик
+                                <span class="required">*</span>
+                            </label>
+
+                            <p class="field-description">
+                                Укажите игровое имя и статический ID.
+                            </p>
+
+                            <input
+                                id="fullName"
+                                name="fullName"
+                                type="text"
+                                minlength="3"
+                                maxlength="150"
+                                placeholder="Например: Adam Smith | 12345"
+                                value="<%= formData.fullName || '' %>"
+                                autocomplete="name"
+                                required
+                            >
+                        </div>
+
+                        <div class="field">
+                            <label for="currentRank">
+                                С какого ранга повышаетесь
+                                <span class="required">*</span>
+                            </label>
+
+                            <select
+                                id="currentRank"
+                                name="currentRank"
+                                required
+                            >
+                                <option value="">
+                                    Выберите текущий ранг
+                                </option>
+
+                                <% ranks
+                                    .filter((rank) => rank.value <= 13)
+                                    .forEach((rank) => { %>
+
+                                    <option
+                                        value="<%= rank.value %>"
+                                        <%= String(formData.currentRank || '') === String(rank.value)
+                                            ? 'selected'
+                                            : ''
+                                        %>
+                                    >
+                                        <%= rank.value %> — <%= rank.name %>
+                                    </option>
+                                <% }) %>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="requestedRank">
+                                На какой ранг повышаетесь
+                                <span class="required">*</span>
+                            </label>
+
+                            <p class="field-description">
+                                Поле заполняется автоматически.
+                            </p>
+
+                            <select
+                                id="requestedRank"
+                                name="requestedRank"
+                                required
+                                disabled
+                            >
+                                <option value="">
+                                    Сначала выберите текущий ранг
+                                </option>
+                            </select>
+                        </div>
+
+                        <div
+                            id="rankNotice"
+                            class="rank-notice"
+                            role="alert"
+                        >
+                            Выбран максимальный ранг.
+                            Отправка запроса на повышение невозможна.
+                        </div>
+
+                        <div class="field field-full">
+                            <label for="approvedReport">
+                                Ссылка на одобренный отчёт
+                                <span class="required">*</span>
+                            </label>
+
+                            <p class="field-description">
+                                Вставьте ссылку на одобренный отчёт,
+                                сообщение Discord или другое подтверждение.
+                            </p>
+
+                            <input
+                                id="approvedReport"
+                                name="approvedReport"
+                                type="text"
+                                maxlength="1000"
+                                placeholder="https://discord.com/channels/..."
+                                value="<%= formData.approvedReport || '' %>"
+                                required
+                            >
+                        </div>
+
+                        <div class="field field-full">
+                            <label for="activeReprimand">
+                                Имеется ли активный выговор?
+                                <span class="required">*</span>
+                            </label>
+
+                            <select
+                                id="activeReprimand"
+                                name="activeReprimand"
+                                required
+                            >
+                                <option value="">
+                                    Выберите вариант
+                                </option>
+
+                                <option
+                                    value="Нет"
+                                    <%= formData.activeReprimand === 'Нет'
+                                        ? 'selected'
+                                        : ''
+                                    %>
+                                >
+                                    Нет
+                                </option>
+
+                                <option
+                                    value="Да"
+                                    <%= formData.activeReprimand === 'Да'
+                                        ? 'selected'
+                                        : ''
+                                    %>
+                                >
+                                    Да
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <a
+                            class="button button-secondary"
+                            href="/dashboard"
+                        >
+                            Отмена
+                        </a>
+
+                        <button
+                            id="submitButton"
+                            class="button button-submit"
+                            type="submit"
+                        >
+                            Отправить запрос
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const ranks = <%- JSON.stringify(ranks) %>;
+
+        const currentRankSelect =
+            document.getElementById("currentRank");
+
+        const requestedRankSelect =
+            document.getElementById("requestedRank");
+
+        const submitButton =
+            document.getElementById("submitButton");
+
+        const rankNotice =
+            document.getElementById("rankNotice");
+
+        const previousRequestedRank =
+            "<%= formData.requestedRank || '' %>";
+
+        function getRankByValue(value) {
+            return ranks.find(
+                (rank) => Number(rank.value) === Number(value)
+            );
+        }
+
+        function updateRequestedRank() {
+            const currentRank =
+                Number(currentRankSelect.value);
+
+            requestedRankSelect.innerHTML = "";
+            rankNotice.classList.remove("visible");
+
+            if (!currentRank) {
+    requestedRankSelect.disabled = true;
+    submitButton.disabled = true;
+
+                requestedRankSelect.innerHTML = `
+                    <option value="">
+                        Сначала выберите текущий ранг
+                    </option>
+                `;
+
+                return;
+            }
+
+            const nextRankNumber = currentRank + 1;
+            const nextRank = getRankByValue(nextRankNumber);
+
+            if (!nextRank) {
+                requestedRankSelect.disabled = true;
+                submitButton.disabled = true;
+                rankNotice.classList.add("visible");
+
+                requestedRankSelect.innerHTML = `
+                    <option value="">
+                        Повышение невозможно
+                    </option>
+                `;
+
+                return;
+            }
+
+            requestedRankSelect.disabled = false;
+            submitButton.disabled = false;
+
+            const option = document.createElement("option");
+
+            option.value = String(nextRank.value);
+            option.textContent =
+                `${nextRank.value} — ${nextRank.name}`;
+            option.selected = true;
+
+            requestedRankSelect.appendChild(option);
+        }
+
+        currentRankSelect.addEventListener(
+            "change",
+            updateRequestedRank
+        );
+
+        updateRequestedRank();
+
+        /*
+         * При повторном отображении формы после серверной ошибки
+         * восстанавливаем ранее рассчитанный запрашиваемый ранг.
+         */
+        if (
+            previousRequestedRank &&
+            requestedRankSelect.querySelector(
+                `option[value="${previousRequestedRank}"]`
+            )
+        ) {
+            requestedRankSelect.value =
+                previousRequestedRank;
+        }
+    </script>
+</body>
+</html>

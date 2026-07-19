@@ -6,6 +6,7 @@ const path = require("path");
 
 const authRoutes = require("./routes/auth");
 const formRoutes = require("./routes/forms");
+const promotionRoutes = require("./routes/promotion");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -72,6 +73,7 @@ app.use(
 
 app.use("/auth", authRoutes);
 app.use("/forms", formRoutes);
+app.use("/forms", promotionRoutes);
 /*
 |--------------------------------------------------------------------------
 | Главная страница
