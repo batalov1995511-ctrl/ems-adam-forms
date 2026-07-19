@@ -440,9 +440,12 @@ router.post("/:formType", requireAuth, async (req, res, next) => {
     */
 
     const payload = {
-        username: "EMS Adam Forms",
+    username: "EMS | Отдел кадров",
+    avatar_url: cleanText(
+        process.env.HR_WEBHOOK_AVATAR_URL
+    ),
 
-        content: roleMentions,
+    content: roleMentions,
 
         allowed_mentions: {
             parse: [],
@@ -511,9 +514,9 @@ router.post("/:formType", requireAuth, async (req, res, next) => {
                     }
                 ],
 
-                footer: {
-                    text: "EMS Adam Forms"
-                }
+               footer: {
+    text: "EMS | Отдел кадров"
+}
             }
         ]
     };
