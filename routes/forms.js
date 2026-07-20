@@ -434,12 +434,16 @@ router.post("/:formType", requireAuth, async (req, res, next) => {
         "Пользователь Discord";
 
     /*
-    |--------------------------------------------------------------------------
-    | Данные Discord webhook
-    |--------------------------------------------------------------------------
-    */
+|--------------------------------------------------------------------------
+| Данные Discord webhook
+|--------------------------------------------------------------------------
+*/
 
-    const payload = {
+const webhookAvatarUrl = cleanText(
+    process.env.HR_WEBHOOK_AVATAR_URL
+);
+
+const payload = {
     username: "EMS | Отдел кадров",
 
     ...(webhookAvatarUrl
