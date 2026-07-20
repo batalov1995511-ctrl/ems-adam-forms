@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>EMS Forms Portal</title>
+    <title>EMS личный кабинет сотрудника</title>
 
     <style>
         * {
@@ -141,21 +141,39 @@
             color: #93c5fd;
             font-weight: bold;
         }
-.vacation-ooc-card:hover {
-    border-color: rgba(34, 197, 94, 0.7);
-}
 
-.vacation-ooc-card .form-link {
-    color: #86efac;
-}
+        .vacation-ooc-card:hover {
+            border-color: rgba(34, 197, 94, 0.7);
+        }
 
-.vacation-ic-card:hover {
-    border-color: rgba(168, 85, 247, 0.7);
-}
+        .vacation-ooc-card .form-link {
+            color: #86efac;
+        }
 
-.vacation-ic-card .form-link {
-    color: #d8b4fe;
-}
+        .vacation-ic-card:hover {
+            border-color: rgba(168, 85, 247, 0.7);
+        }
+
+        .vacation-ic-card .form-link {
+            color: #d8b4fe;
+        }
+
+        .promotion-card:hover {
+            border-color: rgba(16, 185, 129, 0.75);
+        }
+
+        .promotion-card .form-link {
+            color: #6ee7b7;
+        }
+
+        .blacklist-card:hover {
+            border-color: rgba(168, 85, 247, 0.75);
+        }
+
+        .blacklist-card .form-link {
+            color: #d8b4fe;
+        }
+
         .danger-card:hover {
             border-color: rgba(248, 113, 113, 0.7);
         }
@@ -258,10 +276,10 @@
         </div>
 
         <section class="forms-grid">
-           <a
-    class="form-card vacation-ooc-card"
-    href="/forms/vacation-ooc"
->
+            <a
+                class="form-card vacation-ooc-card"
+                href="/forms/vacation-ooc"
+            >
                 <div class="form-icon">🌴</div>
 
                 <h3>OOC-отпуск</h3>
@@ -275,10 +293,10 @@
                 </span>
             </a>
 
-           <a
-    class="form-card vacation-ic-card"
-    href="/forms/vacation-ic"
->
+            <a
+                class="form-card vacation-ic-card"
+                href="/forms/vacation-ic"
+            >
                 <div class="form-icon">🏥</div>
 
                 <h3>IC-отпуск</h3>
@@ -323,22 +341,22 @@
                 </span>
             </article>
 
-           <a
-    class="form-card promotion-card"
-    href="/forms/promotion"
->
-    <div class="form-icon">&#128200;</div>
+            <a
+                class="form-card promotion-card"
+                href="/forms/promotion"
+            >
+                <div class="form-icon">&#128200;</div>
 
-    <h3>Запрос на повышение</h3>
+                <h3>Запрос на повышение</h3>
 
-    <p>
-        Заявление на рассмотрение повышения.
-    </p>
+                <p>
+                    Заявление на рассмотрение повышения.
+                </p>
 
-    <span class="form-link">
-        Открыть форму →
-    </span>
-</a>
+                <span class="form-link">
+                    Открыть форму →
+                </span>
+            </a>
 
             <article class="form-card disabled-card">
                 <div class="form-icon">📋</div>
@@ -382,19 +400,23 @@
                 </span>
             </article>
 
-            <article class="form-card disabled-card">
-                <div class="form-icon">⛔</div>
+            <a
+                class="form-card blacklist-card"
+                href="/forms/blacklist"
+            >
+                <div class="form-icon">&#9940;</div>
 
                 <h3>Чёрный список</h3>
 
                 <p>
-                    Запрос на добавление сотрудника в чёрный список.
+                    Запрос на добавление сотрудника
+                    в чёрный список EMS.
                 </p>
 
-                <span class="soon">
-                    Скоро
+                <span class="form-link">
+                    Открыть форму →
                 </span>
-            </article>
+            </a>
         </section>
     </main>
 </body>

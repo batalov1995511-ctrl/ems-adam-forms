@@ -441,9 +441,10 @@ router.post("/:formType", requireAuth, async (req, res, next) => {
 
     const payload = {
     username: "EMS | Отдел кадров",
-    avatar_url: cleanText(
-        process.env.HR_WEBHOOK_AVATAR_URL
-    ),
+
+    ...(webhookAvatarUrl
+        ? { avatar_url: webhookAvatarUrl }
+        : {}),
 
     content: roleMentions,
 

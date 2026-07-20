@@ -2,7 +2,6 @@ const express = require("express");
 const axios = require("axios");
 
 const router = express.Router();
-console.log("promotion.js подключён");
 /**
  * Полный список рангов EMS.
  *

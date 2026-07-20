@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Запрос на добавление в ЧС | EMS Adam Forms</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background: #070b12;
+            --panel: rgba(15, 23, 42, 0.96);
+            --panel-secondary: rgba(30, 41, 59, 0.78);
+            --border: rgba(148, 163, 184, 0.2);
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --accent: #9333ea;
+            --accent-light: #a855f7;
+            --danger: #ef4444;
+            --success: #22c55e;
+        }
+
+        html {
+            color-scheme: dark;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 32px 16px;
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(16, 185, 129, 0.12),
+                    transparent 32%
+                ),
+                radial-gradient(
+                    circle at top right,
+                    rgba(147, 51, 234, 0.13),
+                    transparent 35%
+                ),
+                var(--background);
+        }
+
+        button,
+        input,
+        textarea {
+            font: inherit;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 1040px;
+            margin: 0 auto;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            text-decoration: none;
+            transition:
+                color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--text);
+            transform: translateX(-2px);
+        }
+
+        .brand {
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+        }
+
+        .form-card {
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 26px;
+            background: var(--panel);
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.38);
+            backdrop-filter: blur(18px);
+        }
+
+        .form-header {
+            padding: 38px 42px;
+            border-bottom: 1px solid var(--border);
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(16, 185, 129, 0.13),
+                    rgba(147, 51, 234, 0.11),
+                    rgba(15, 23, 42, 0.15)
+                );
+        }
+
+        .form-icon {
+            display: grid;
+            width: 58px;
+            height: 58px;
+            margin-bottom: 22px;
+            place-items: center;
+            border: 1px solid rgba(168, 85, 247, 0.38);
+            border-radius: 16px;
+            background: rgba(147, 51, 234, 0.13);
+            font-size: 28px;
+        }
+
+        h1 {
+            margin: 0 0 14px;
+            font-size: clamp(30px, 5vw, 46px);
+            line-height: 1.1;
+        }
+
+        .subtitle {
+            max-width: 720px;
+            margin: 0;
+            color: var(--muted);
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        .form-body {
+            padding: 38px 42px 42px;
+        }
+
+        .notice {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 30px;
+            padding: 22px;
+            border: 1px solid rgba(168, 85, 247, 0.42);
+            border-radius: 16px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(147, 51, 234, 0.11),
+                    rgba(30, 41, 59, 0.58)
+                );
+        }
+
+        .notice-icon {
+            display: grid;
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            place-items: center;
+            border-radius: 50%;
+            color: #e9d5ff;
+            background: rgba(147, 51, 234, 0.22);
+            font-size: 22px;
+            font-weight: 900;
+        }
+
+        .notice h2 {
+            margin: 0 0 7px;
+            font-size: 17px;
+        }
+
+        .notice p {
+            margin: 0;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .alert {
+            margin-bottom: 26px;
+            padding: 16px 18px;
+            border-radius: 14px;
+            line-height: 1.5;
+        }
+
+        .alert-error {
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #fecaca;
+            background: rgba(239, 68, 68, 0.11);
+        }
+
+        .alert-success {
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            color: #bbf7d0;
+            background: rgba(34, 197, 94, 0.11);
+        }
+
+        .form-grid {
+            display: grid;
+            gap: 25px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        label {
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .required {
+            color: #f87171;
+        }
+
+        .field-description {
+            margin: -1px 0 3px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            outline: none;
+            color: var(--text);
+            background: var(--panel-secondary);
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
+        }
+
+        input {
+            min-height: 56px;
+            padding: 0 17px;
+        }
+
+        textarea {
+            min-height: 145px;
+            padding: 16px 17px;
+            line-height: 1.55;
+            resize: vertical;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #64748b;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: rgba(168, 85, 247, 0.78);
+            background: rgba(30, 41, 59, 0.96);
+            box-shadow:
+                0 0 0 4px rgba(147, 51, 234, 0.13);
+        }
+
+        .readonly-input {
+            padding-right: 52px;
+            cursor: not-allowed;
+            color: #cbd5e1;
+            background: rgba(30, 41, 59, 0.5);
+        }
+
+        .lock-icon {
+            position: absolute;
+            top: 50%;
+            right: 18px;
+            color: #94a3b8;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .counter {
+            align-self: flex-end;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 14px;
+            margin-top: 32px;
+            padding-top: 28px;
+            border-top: 1px solid var(--border);
+        }
+
+        .button {
+            display: inline-flex;
+            min-height: 52px;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            border-radius: 14px;
+            cursor: pointer;
+            font-weight: 900;
+            text-decoration: none;
+            transition:
+                transform 0.2s ease,
+                opacity 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-1px);
+        }
+
+        .button-secondary {
+            min-width: 140px;
+            padding: 0 22px;
+            color: var(--text);
+            background: rgba(148, 163, 184, 0.12);
+        }
+
+        .button-submit {
+            flex-grow: 1;
+            padding: 0 24px;
+            color: #ffffff;
+            background:
+                linear-gradient(
+                    90deg,
+                    #7c3aed,
+                    #9333ea,
+                    #7c3aed
+                );
+            box-shadow:
+                0 12px 28px rgba(147, 51, 234, 0.24);
+        }
+
+        .button-submit:hover {
+            box-shadow:
+                0 15px 34px rgba(147, 51, 234, 0.34);
+        }
+
+        .button-submit:disabled {
+            cursor: not-allowed;
+            opacity: 0.55;
+            transform: none;
+            box-shadow: none;
+        }
+
+        @media (max-width: 680px) {
+            body {
+                padding: 16px 10px;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .form-header,
+            .form-body {
+                padding: 25px 20px;
+            }
+
+            .notice {
+                padding: 18px;
+            }
+
+            .form-actions {
+                align-items: stretch;
+                flex-direction: column-reverse;
+            }
+
+            .button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="page">
+        <div class="topbar">
+            <a class="back-link" href="/dashboard">
+                ← Вернуться в личный кабинет
+            </a>
+
+            <div class="brand">
+                EMS ADAM FORMS
+            </div>
+        </div>
+
+        <section class="form-card">
+            <header class="form-header">
+                <div class="form-icon">
+                    &#9940;
+                </div>
+
+                <h1>
+                    Запрос на добавление в ЧС
+                </h1>
+
+                <p class="subtitle">
+                    Заполните заявление на добавление сотрудника
+                    в чёрный список. Все поля обязательны к заполнению.
+                </p>
+            </header>
+
+            <div class="form-body">
+                <div class="notice">
+                    <div class="notice-icon">
+                        i
+                    </div>
+
+                    <div>
+                        <h2>Внимание</h2>
+
+                        <p>
+                            Запрос будет направлен Главному врачу
+                            и его заместителю. Убедитесь в корректности
+                            всех данных и доказательств перед отправкой.
+                        </p>
+                    </div>
+                </div>
+
+                <% if (error) { %>
+                    <div
+                        class="alert alert-error"
+                        role="alert"
+                    >
+                        <%= error %>
+                    </div>
+                <% } %>
+
+                <% if (success) { %>
+                    <div
+                        class="alert alert-success"
+                        role="status"
+                    >
+                        <%= success %>
+                    </div>
+                <% } %>
+
+                <form
+                    id="blacklistForm"
+                    method="POST"
+                    action="/forms/blacklist"
+                >
+                    <div class="form-grid">
+                        <div class="field">
+                            <label for="discordId">
+                                Discord ID заявителя
+                                <span class="required">*</span>
+                            </label>
+
+                            <p class="field-description">
+                                ID получен из авторизованного Discord-аккаунта
+                                и не может быть изменён.
+                            </p>
+
+                            <div class="input-wrapper">
+                                <input
+                                    id="discordId"
+                                    type="text"
+                                    value="<%= user.id %>"
+                                    class="readonly-input"
+                                    readonly
+                                    tabindex="-1"
+                                >
+
+                                <span
+                                    class="lock-icon"
+                                    aria-hidden="true"
+                                >
+                                    🔒
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label for="applicantName">
+                                Фамилия Имя | Статик (Ваши)
+                                <span class="required">*</span>
+                            </label>
+
+                            <p class="field-description">
+                                Укажите своё игровое имя и статический ID.
+                            </p>
+
+                            <input
+                                id="applicantName"
+                                name="applicantName"
+                                type="text"
+                                minlength="3"
+                                maxlength="150"
+                                placeholder="Например: Mario Feruci | 134726"
+                                value="<%= formData.applicantName || '' %>"
+                                required
+                            >
+                        </div>
+
+                        <div class="field">
+                            <label for="targetName">
+                                Фамилия Имя | Статик
+                                (Кого добавить в ЧС)
+                                <span class="required">*</span>
+                            </label>
+
+                            <p class="field-description">
+                                Укажите игровое имя и статический ID сотрудника.
+                            </p>
+
+                            <input
+                                id="targetName"
+                                name="targetName"
+                                type="text"
+                                minlength="3"
+                                maxlength="150"
+                                placeholder="Например: Evgenii Svyatov | 417900"
+                                value="<%= formData.targetName || '' %>"
+                                required
+                            >
+                        </div>
+
+                        <div class="field">
+                            <label for="reason">
+                                Причина внесения в ЧС
+                                <span class="required">*</span>
+                            </label>
+
+                            <p class="field-description">
+                                Подробно опишите причину, по которой сотрудник
+                                должен быть внесён в чёрный список.
+                            </p>
+
+                            <textarea
+                                id="reason"
+                                name="reason"
+                                minlength="10"
+                                maxlength="1000"
+                                placeholder="Например: многочисленные нарушения Устава EMS"
+                                required
+                            ><%= formData.reason || '' %></textarea>
+
+                            <div class="counter">
+                                <span id="reasonCounter">0</span> / 1000
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label for="evidence">
+                                Ссылка на выговор(ы) |
+                                КА об увольнении
+                                <span class="required">*</span>
+                            </label>
+
+                            <p class="field-description">
+                                Вставьте одну или несколько ссылок
+                                на сообщения Discord, выговоры
+                                или кадровый аудит об увольнении.
+                            </p>
+
+                            <textarea
+                                id="evidence"
+                                name="evidence"
+                                minlength="5"
+                                maxlength="1000"
+                                placeholder="https://discord.com/channels/..."
+                                required
+                            ><%= formData.evidence || '' %></textarea>
+
+                            <div class="counter">
+                                <span id="evidenceCounter">0</span> / 1000
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <a
+                            class="button button-secondary"
+                            href="/dashboard"
+                        >
+                            Отмена
+                        </a>
+
+                        <button
+                            id="submitButton"
+                            class="button button-submit"
+                            type="submit"
+                        >
+                            ✈ Отправить запрос
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const form =
+            document.getElementById("blacklistForm");
+
+        const submitButton =
+            document.getElementById("submitButton");
+
+        const reasonInput =
+            document.getElementById("reason");
+
+        const evidenceInput =
+            document.getElementById("evidence");
+
+        const reasonCounter =
+            document.getElementById("reasonCounter");
+
+        const evidenceCounter =
+            document.getElementById("evidenceCounter");
+
+        function updateCounter(input, counter) {
+            counter.textContent = String(input.value.length);
+        }
+
+        reasonInput.addEventListener("input", () => {
+            updateCounter(reasonInput, reasonCounter);
+        });
+
+        evidenceInput.addEventListener("input", () => {
+            updateCounter(evidenceInput, evidenceCounter);
+        });
+
+        form.addEventListener("submit", () => {
+            submitButton.disabled = true;
+            submitButton.textContent = "Отправка...";
+        });
+
+        updateCounter(reasonInput, reasonCounter);
+        updateCounter(evidenceInput, evidenceCounter);
+    </script>
+</body>
+</html>
