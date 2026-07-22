@@ -199,7 +199,7 @@ router.post("/resignation", requireAuth, async (req, res) => {
         console.log("Текст упоминания:", `<@&${roleId}>`);
 
         await axios.post(webhookUrl, {
-            username: "EMS Adam Forms",
+            username: "EMS | Отдел кадров",
 
             /*
              * Упоминание роли должно находиться именно в content.
