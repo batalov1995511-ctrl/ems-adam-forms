@@ -10,6 +10,7 @@ const promotionRoutes = require("./routes/promotion");
 const blacklistRoutes = require("./routes/blacklist");
 const breakRoutes = require("./routes/break");
 const departmentTransferRoutes = require("./routes/department-transfer");
+const staffDepartmentTransferRoutes = require("./routes/staff-department-transfer");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -80,6 +81,7 @@ app.use("/forms", promotionRoutes);
 app.use("/forms", blacklistRoutes);
 app.use("/forms", breakRoutes);
 app.use( "/forms", departmentTransferRoutes);
+app.use("/forms", staffDepartmentTransferRoutes);
 /*
 |--------------------------------------------------------------------------
 | Главная страница
