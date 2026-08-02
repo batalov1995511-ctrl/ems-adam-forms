@@ -26,6 +26,7 @@ function requireAuth(req, res, next) {
 router.get("/discord", (req, res) => {
     const clientId = process.env.DISCORD_CLIENT_ID;
     const redirectUri = process.env.DISCORD_REDIRECT_URI;
+    console.log("Текущий Discord Redirect URI:", redirectUri);
 
     if (!clientId || !redirectUri) {
         console.error("Не заполнены DISCORD_CLIENT_ID или DISCORD_REDIRECT_URI");
