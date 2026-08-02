@@ -11,7 +11,17 @@ const blacklistRoutes = require("./routes/blacklist");
 const breakRoutes = require("./routes/break");
 const departmentTransferRoutes = require("./routes/department-transfer");
 const staffDepartmentTransferRoutes = require("./routes/staff-department-transfer");
+
 const app = express();
+
+/*
+|--------------------------------------------------------------------------
+| Работа через Cloudflare Worker / reverse proxy
+|--------------------------------------------------------------------------
+*/
+
+app.set("trust proxy", 1);
+
 const PORT = process.env.PORT || 3000;
 
 /*
@@ -51,12 +61,15 @@ app.use(express.json());
 
 app.use(
     session({
-        secret:
-            process.env.SESSION_SECRET ||
-            "ems-adam-forms-temporary-secret",
+        secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: false,
+        proxy: true,
+
         cookie: {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
             maxAge: 1000 * 60 * 60 * 24
         }
     })
