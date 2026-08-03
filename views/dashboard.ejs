@@ -1,441 +1,72 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>EMS личный кабинет сотрудника</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: Arial, sans-serif;
-            background:
-                radial-gradient(
-                    circle at top,
-                    rgba(37, 99, 235, 0.2),
-                    transparent 34%
-                ),
-                #0f172a;
-            color: #ffffff;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 40px 20px 60px;
-        }
-
-        .profile {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 28px;
-            border: 1px solid rgba(148, 163, 184, 0.15);
-            border-radius: 20px;
-            background: rgba(30, 41, 59, 0.95);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-        }
-
-        .avatar {
-            width: 90px;
-            height: 90px;
-            flex-shrink: 0;
-            border-radius: 50%;
-            object-fit: cover;
-            background: #334155;
-        }
-
-        .profile-info {
-            flex-grow: 1;
-        }
-
-        .profile-info h1 {
-            margin: 0 0 10px;
-            font-size: 28px;
-        }
-
-        .profile-info p {
-            margin: 5px 0;
-            color: #cbd5e1;
-        }
-
-        .logout {
-            display: inline-block;
-            padding: 11px 17px;
-            border-radius: 10px;
-            background: #dc2626;
-            color: #ffffff;
-            font-weight: bold;
-            text-decoration: none;
-            transition: 0.2s ease;
-        }
-
-        .logout:hover {
-            background: #b91c1c;
-        }
-
-        .section-header {
-            margin: 38px 0 20px;
-        }
-
-        .section-header h2 {
-            margin: 0 0 8px;
-            font-size: 26px;
-        }
-
-        .section-header p {
-            margin: 0;
-            color: #94a3b8;
-        }
-
-        .forms-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-        }
-
-        .form-card {
-            display: flex;
-            min-height: 220px;
-            flex-direction: column;
-            padding: 24px;
-            border: 1px solid rgba(148, 163, 184, 0.16);
-            border-radius: 17px;
-            background: rgba(30, 41, 59, 0.92);
-            color: #ffffff;
-            text-decoration: none;
-            transition: 0.22s ease;
-        }
-
-        .form-card:hover {
-            border-color: rgba(96, 165, 250, 0.65);
-            transform: translateY(-4px);
-            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.28);
-        }
-
-        .form-icon {
-            margin-bottom: 18px;
-            font-size: 36px;
-        }
-
-        .form-card h3 {
-            margin: 0 0 10px;
-            font-size: 20px;
-        }
-
-        .form-card p {
-            margin: 0 0 20px;
-            color: #cbd5e1;
-            line-height: 1.5;
-        }
-
-        .form-link {
-            margin-top: auto;
-            color: #93c5fd;
-            font-weight: bold;
-        }
-
-        .vacation-ooc-card:hover {
-            border-color: rgba(34, 197, 94, 0.7);
-        }
-
-        .vacation-ooc-card .form-link {
-            color: #86efac;
-        }
-
-        .vacation-ic-card:hover {
-            border-color: rgba(168, 85, 247, 0.7);
-        }
-
-        .vacation-ic-card .form-link {
-            color: #d8b4fe;
-        }
-
-        .break-card:hover {
-            border-color: rgba(245, 158, 11, 0.75);
-            box-shadow:
-                0 20px 45px rgba(0, 0, 0, 0.28),
-                0 0 28px rgba(245, 158, 11, 0.10);
-        }
-
-        .break-card .form-link {
-            color: #fcd34d;
-        }
-
-        .promotion-card:hover {
-            border-color: rgba(16, 185, 129, 0.75);
-        }
-
-        .promotion-card .form-link {
-            color: #6ee7b7;
-        }
-
-        .blacklist-card:hover {
-            border-color: rgba(168, 85, 247, 0.75);
-        }
-
-        .blacklist-card .form-link {
-            color: #d8b4fe;
-        }
-
-        .danger-card:hover {
-            border-color: rgba(248, 113, 113, 0.7);
-        }
-
-        .danger-card .form-link {
-            color: #fca5a5;
-        }
-
-        .disabled-card {
-            cursor: default;
-            opacity: 0.55;
-        }
-
-        .disabled-card:hover {
-            border-color: rgba(148, 163, 184, 0.16);
-            transform: none;
-            box-shadow: none;
-        }
-
-        .soon {
-            margin-top: auto;
-            color: #94a3b8;
-            font-weight: bold;
-        }
-
-        @media (max-width: 850px) {
-            .forms-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 24px 14px 40px;
-            }
-
-            .profile {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-
-            .forms-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .avatar {
-                width: 76px;
-                height: 76px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07101b">
+  <title>EMS — Личный кабинет сотрудника</title>
+  <link rel="icon" href="/images/logo-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/portal-theme.css">
 </head>
-
 <body>
-    <main class="container">
-        <section class="profile">
-            <% if (user.avatar) { %>
-                <img
-                    class="avatar"
-                    src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png?size=256"
-                    alt="Discord avatar"
-                >
-            <% } else { %>
-                <img
-                    class="avatar"
-                    src="https://cdn.discordapp.com/embed/avatars/0.png"
-                    alt="Discord avatar"
-                >
-            <% } %>
+  <div class="page-background" aria-hidden="true"><div class="page-grid"></div><div class="page-glow red"></div><div class="page-glow blue"></div></div>
 
-            <div class="profile-info">
-                <h1>
-                    Добро пожаловать,
-                    <%= user.global_name || user.username %>
-                </h1>
+  <header class="portal-header">
+    <div class="portal-container header-inner">
+      <a class="brand-plaque" href="/dashboard">
+        <img class="brand-logo" src="/images/logo-mark.svg" alt="">
+        <span class="brand-text"><span class="brand-main"><strong>EMS</strong> <em>MAJESTIC RP</em></span><span class="brand-subtitle">EAST LOS SANTOS HOSPITAL</span></span>
+      </a>
+      <div class="header-actions">
+        <a class="public-site-link" href="https://emsmajestic.ru" target="_blank" rel="noopener noreferrer">Открыть сайт ↗</a>
+        <a class="logout-button" href="/auth/logout">Выйти</a>
+      </div>
+    </div>
+  </header>
 
-                <p>
-                    <strong>Username:</strong>
-                    <%= user.username %>
-                </p>
-
-                <p>
-                    <strong>Discord ID:</strong>
-                    <%= user.id %>
-                </p>
-            </div>
-
-            <a class="logout" href="/auth/logout">
-                Выйти
-            </a>
-        </section>
-
-        <div class="section-header">
-            <h2>Кадровые формы EMS</h2>
-
-            <p>
-                Выберите нужную форму. Отправленная заявка автоматически
-                поступит в соответствующий Discord-канал.
-            </p>
+  <main class="portal-container dashboard">
+    <section class="profile-card">
+      <div class="profile-main">
+        <div class="avatar-wrap">
+          <% if (user.avatar) { %>
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png?size=256" alt="Discord avatar">
+          <% } else { %>
+            <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Discord avatar">
+          <% } %>
+          <span class="online-indicator"></span>
         </div>
+        <div class="profile-info">
+          <span class="profile-kicker">Личный кабинет сотрудника</span>
+          <h1>Добро пожаловать, <span><%= user.global_name || user.username %></span></h1>
+          <p>Выберите необходимый кадровый сервис. Отправленная заявка автоматически поступит в соответствующий Discord-канал EMS.</p>
+        </div>
+      </div>
+      <div class="profile-meta">
+        <div class="meta-item"><span>Discord username</span><strong><%= user.username %></strong></div>
+        <div class="meta-item"><span>Discord ID</span><strong><%= user.id %></strong></div>
+        <div class="meta-item"><span>Статус портала</span><strong class="portal-status"><i></i>Online</strong></div>
+      </div>
+    </section>
 
-        <section class="forms-grid">
-            <a
-                class="form-card vacation-ooc-card"
-                href="/forms/vacation-ooc"
-            >
-                <div class="form-icon">🌴</div>
+    <section class="dashboard-intro">
+      <div><span class="section-kicker">Кадровые сервисы</span><h2>Формы EMS</h2><p>Все внутренние заявления и запросы собраны в едином кабинете.</p></div>
+      <div class="dashboard-stat"><strong>8</strong><span>доступных сервисов</span></div>
+    </section>
 
-                <h3>OOC-отпуск</h3>
+    <section class="forms-grid">
+      <a class="service-card ooc" href="/forms/vacation-ooc"><div class="service-top"><span class="service-icon">🌴</span><span class="service-badge">Отпуск</span></div><h3>OOC-отпуск</h3><p>Заявление на отпуск по причинам вне игрового процесса.</p><span class="service-link">Открыть форму <b>→</b></span></a>
+      <a class="service-card ic" href="/forms/vacation-ic"><div class="service-top"><span class="service-icon">🏥</span><span class="service-badge">Отпуск</span></div><h3>IC-отпуск</h3><p>Заявление на отпуск по внутриигровой причине.</p><span class="service-link">Открыть форму <b>→</b></span></a>
+      <a class="service-card danger" href="/auth/resignation"><div class="service-top"><span class="service-icon">📤</span><span class="service-badge">Кадры</span></div><h3>Увольнение</h3><p>Заявление на увольнение из Emergency Medical Services.</p><span class="service-link">Открыть форму <b>→</b></span></a>
+      <a class="service-card break" href="/forms/break"><div class="service-top"><span class="service-icon">☕</span><span class="service-badge">Служба</span></div><h3>Перерыв</h3><p>Оформление временного перерыва сотрудника EMS.</p><span class="service-link">Открыть форму <b>→</b></span></a>
+      <a class="service-card promotion" href="/forms/promotion"><div class="service-top"><span class="service-icon">📈</span><span class="service-badge">Карьера</span></div><h3>Запрос на повышение</h3><p>Заявление на рассмотрение повышения сотрудника.</p><span class="service-link">Открыть форму <b>→</b></span></a>
+      <article class="service-card disabled"><div class="service-top"><span class="service-icon">📋</span><span class="service-badge">Скоро</span></div><h3>Недельный отчёт</h3><p>Отчёт о работе сотрудника EMS за прошедшую неделю.</p><span class="service-link">В разработке</span></article>
+      <a class="service-card transfer" href="/forms/staff-department-transfer"><div class="service-top"><span class="service-icon">🔁</span><span class="service-badge">Старший состав</span></div><h3>Служебный перевод</h3><p>Оформление перевода сотрудника между отделами старшим составом EMS.</p><span class="service-link">Открыть форму <b>→</b></span></a>
+      <a class="service-card department" href="/forms/department-transfer"><div class="service-top"><span class="service-icon">📨</span><span class="service-badge">Отделы</span></div><h3>Заявка в отдел</h3><p>Подача заявки на перевод в выбранный отдел EMS.</p><span class="service-link">Открыть форму <b>→</b></span></a>
+      <a class="service-card blacklist" href="/forms/blacklist"><div class="service-top"><span class="service-icon">⛔</span><span class="service-badge">Контроль</span></div><h3>Чёрный список</h3><p>Запрос на добавление сотрудника в чёрный список EMS.</p><span class="service-link">Открыть форму <b>→</b></span></a>
+    </section>
+  </main>
 
-                <p>
-                    Заявление на отпуск по причинам вне игрового процесса.
-                </p>
-
-                <span class="form-link">
-                    Открыть форму →
-                </span>
-            </a>
-
-            <a
-                class="form-card vacation-ic-card"
-                href="/forms/vacation-ic"
-            >
-                <div class="form-icon">🏥</div>
-
-                <h3>IC-отпуск</h3>
-
-                <p>
-                    Заявление на отпуск по внутриигровой причине.
-                </p>
-
-                <span class="form-link">
-                    Открыть форму →
-                </span>
-            </a>
-
-            <a
-                class="form-card danger-card"
-                href="/auth/resignation"
-            >
-                <div class="form-icon">📤</div>
-
-                <h3>Увольнение</h3>
-
-                <p>
-                    Заявление на увольнение из EMS.
-                </p>
-
-                <span class="form-link">
-                    Открыть форму →
-                </span>
-            </a>
-
-            <a
-                class="form-card break-card"
-                href="/forms/break"
-            >
-                <div class="form-icon">☕</div>
-
-                <h3>Перерыв</h3>
-
-                <p>
-                    Заявление на оформление временного перерыва сотрудника EMS.
-                </p>
-
-                <span class="form-link">
-                    Открыть форму →
-                </span>
-            </a>
-
-            <a
-                class="form-card promotion-card"
-                href="/forms/promotion"
-            >
-                <div class="form-icon">&#128200;</div>
-
-                <h3>Запрос на повышение</h3>
-
-                <p>
-                    Заявление на рассмотрение повышения.
-                </p>
-
-                <span class="form-link">
-                    Открыть форму →
-                </span>
-            </a>
-
-            <article class="form-card disabled-card">
-                <div class="form-icon">📋</div>
-
-                <h3>Недельный отчёт</h3>
-
-                <p>
-                    Отчёт о работе сотрудника за неделю.
-                </p>
-
-                <span class="soon">
-                    Скоро
-                </span>
-            </article>
-
-            <a href="/forms/staff-department-transfer" class="form-card">
-    <div class="card-icon">
-        🔁
-    </div>
-
-    <div class="card-content">
-        <h3 class="card-title">
-            Служебный перевод
-        </h3>
-
-        <p class="card-description">
-            Оформление перевода сотрудника между отделами старшим составом EMS.
-        </p>
-
-        <span class="card-link">
-            Открыть форму →
-        </span>
-    </div>
-</a>
-            <a href="/forms/department-transfer" class="form-card">
-    <div class="form-icon">📨</div>
-
-    <h3>Заявка в отдел</h3>
-
-    <p>
-        Подать заявление на перевод в выбранный отдел.
-    </p>
-                <span class="form-link">
-                    Открыть форму →
-                </span>
-</a>
-
-            <a
-                class="form-card blacklist-card"
-                href="/forms/blacklist"
-            >
-                <div class="form-icon">&#9940;</div>
-
-                <h3>Чёрный список</h3>
-
-                <p>
-                    Запрос на добавление сотрудника
-                    в чёрный список EMS.
-                </p>
-
-                <span class="form-link">
-                    Открыть форму →
-                </span>
-            </a>
-        </section>
-    </main>
+  <footer class="portal-footer"><div class="portal-container footer-inner"><div class="footer-brand"><img src="/images/logo-mark.svg" alt=""><div><strong>EMS Majestic RP</strong><span>East Los Santos Hospital</span></div></div><p>© <span id="year"></span> EMS Department. Внутренний портал сотрудников.</p></div></footer>
+  <script src="/js/portal-ui.js"></script>
 </body>
 </html>
