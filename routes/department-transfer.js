@@ -181,9 +181,23 @@ router.get(
     "/department-transfer",
     requireAuth,
     (req, res) => {
+        const requestedDepartment = cleanText(
+            req.query?.department
+        ).toUpperCase();
+
+        const presetDepartment =
+            allowedTargetDepartments.includes(requestedDepartment)
+                ? requestedDepartment
+                : "";
+
         return renderForm(
             res,
-            req.session.user
+            req.session.user,
+            {
+                formData: {
+                    toDepartment: presetDepartment
+                }
+            }
         );
     }
 );

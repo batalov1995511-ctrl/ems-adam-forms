@@ -11,6 +11,7 @@ const blacklistRoutes = require("./routes/blacklist");
 const breakRoutes = require("./routes/break");
 const departmentTransferRoutes = require("./routes/department-transfer");
 const staffDepartmentTransferRoutes = require("./routes/staff-department-transfer");
+const weeklyReportRoutes = require("./routes/weekly-report");
 
 const app = express();
 
@@ -95,6 +96,8 @@ app.use("/forms", blacklistRoutes);
 app.use("/forms", breakRoutes);
 app.use( "/forms", departmentTransferRoutes);
 app.use("/forms", staffDepartmentTransferRoutes);
+
+app.use(weeklyReportRoutes);
 /*
 |--------------------------------------------------------------------------
 | Главная страница

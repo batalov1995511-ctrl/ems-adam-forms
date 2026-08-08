@@ -1,7 +1,52 @@
 const express = require("express");
 const axios = require("axios");
+const https = require("https");
 
 const router = express.Router();
+
+const discordHttp = axios.create({
+    timeout: 15000,
+    httpsAgent: new https.Agent({ keepAlive: false }),
+    headers: {
+        "User-Agent": "EMS-Majestic-Portal/1.0"
+    }
+});
+
+function isRetryableNetworkError(error) {
+    return [
+        "ECONNRESET",
+        "ETIMEDOUT",
+        "ECONNABORTED",
+        "EAI_AGAIN",
+        "ENETUNREACH",
+        "ECONNREFUSED"
+    ].includes(error?.code);
+}
+
+async function withRetry(requestFn, attempts = 3) {
+    let lastError;
+
+    for (let attempt = 1; attempt <= attempts; attempt += 1) {
+        try {
+            return await requestFn();
+        } catch (error) {
+            lastError = error;
+
+            if (!isRetryableNetworkError(error) || attempt === attempts) {
+                throw error;
+            }
+
+            const delay = 600 * attempt;
+            console.warn(
+                `Discord OAuth: ${error.code}. Повтор ${attempt}/${attempts - 1} через ${delay} мс.`
+            );
+
+            await new Promise((resolve) => setTimeout(resolve, delay));
+        }
+    }
+
+    throw lastError;
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -26,9 +71,6 @@ function requireAuth(req, res, next) {
 router.get("/discord", (req, res) => {
     const clientId = process.env.DISCORD_CLIENT_ID;
     const redirectUri = process.env.DISCORD_REDIRECT_URI;
-    console.log("ENV:", process.env.DISCORD_REDIRECT_URI);
-console.log("redirectUri:", redirectUri);
-console.log("ALL ENV KEYS:", Object.keys(process.env).filter(x => x.includes("DISCORD")));
     console.log("Текущий Discord Redirect URI:", redirectUri);
 
     if (!clientId || !redirectUri) {
@@ -68,31 +110,35 @@ router.get("/callback", async (req, res) => {
     }
 
     try {
-        const tokenResponse = await axios.post(
-            "https://discord.com/api/oauth2/token",
-            new URLSearchParams({
-                client_id: process.env.DISCORD_CLIENT_ID,
-                client_secret: process.env.DISCORD_CLIENT_SECRET,
-                grant_type: "authorization_code",
-                code: code,
-                redirect_uri: process.env.DISCORD_REDIRECT_URI
-            }).toString(),
-            {
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
+        const tokenResponse = await withRetry(() =>
+            discordHttp.post(
+                "https://discord.com/api/oauth2/token",
+                new URLSearchParams({
+                    client_id: String(process.env.DISCORD_CLIENT_ID || "").trim(),
+                    client_secret: String(process.env.DISCORD_CLIENT_SECRET || "").trim(),
+                    grant_type: "authorization_code",
+                    code: code,
+                    redirect_uri: String(process.env.DISCORD_REDIRECT_URI || "").trim()
+                }).toString(),
+                {
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    }
                 }
-            }
+            )
         );
 
         const accessToken = tokenResponse.data.access_token;
 
-        const userResponse = await axios.get(
-            "https://discord.com/api/users/@me",
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
+        const userResponse = await withRetry(() =>
+            discordHttp.get(
+                "https://discord.com/api/users/@me",
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
                 }
-            }
+            )
         );
 
         req.session.user = userResponse.data;
@@ -101,16 +147,40 @@ router.get("/callback", async (req, res) => {
             `Пользователь авторизован: ${userResponse.data.username} (${userResponse.data.id})`
         );
 
-        res.redirect("/dashboard");
-    } catch (error) {
-        console.error(
-            "Ошибка Discord OAuth:",
-            error.response?.data || error.message
-        );
+        // Если вход был начат со служебной формы, возвращаем пользователя
+        // туда же. Разрешаем только внутренние относительные URL.
+        const returnTo = req.session.returnTo;
+        delete req.session.returnTo;
 
-        res
-            .status(500)
-            .send("Не удалось выполнить вход через Discord.");
+        const safeReturnTo =
+            typeof returnTo === "string"
+            && returnTo.startsWith("/")
+            && !returnTo.startsWith("//")
+                ? returnTo
+                : "/dashboard";
+
+        res.redirect(safeReturnTo);
+    } catch (error) {
+        console.error("Ошибка Discord OAuth:");
+        console.error("message:", error?.message);
+        console.error("code:", error?.code || "нет");
+        console.error("status:", error?.response?.status || "нет");
+
+        if (error?.response?.data) {
+            console.error("Discord response:", error.response.data);
+        }
+
+        const networkError = isRetryableNetworkError(error);
+
+        return res.status(500).send(`
+            <h1>Не удалось выполнить вход через Discord.</h1>
+            <p>${
+                networkError
+                    ? "Соединение с Discord было прервано. Попробуйте ещё раз."
+                    : "Discord отклонил запрос авторизации."
+            }</p>
+            <p><a href="/auth/discord">Повторить вход</a></p>
+        `);
     }
 });
 

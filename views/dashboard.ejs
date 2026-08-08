@@ -3,70 +3,255 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#07101b">
-  <title>EMS — Личный кабинет сотрудника</title>
-  <link rel="icon" href="/images/logo-mark.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/css/portal-theme.css">
+  <meta name="theme-color" content="#050b13">
+  <title>EMS — Личный кабинет</title>
+  <link rel="icon" href="/images/logo-premium.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/portal-theme.css?v=20260808-v6-1">
 </head>
 <body>
-  <div class="page-background" aria-hidden="true"><div class="page-grid"></div><div class="page-glow red"></div><div class="page-glow blue"></div></div>
-
-  <header class="portal-header">
-    <div class="portal-container header-inner">
-      <a class="brand-plaque" href="/dashboard">
-        <img class="brand-logo" src="/images/logo-mark.svg" alt="">
-        <span class="brand-text"><span class="brand-main"><strong>EMS</strong> <em>MAJESTIC RP</em></span><span class="brand-subtitle">EAST LOS SANTOS HOSPITAL</span></span>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="side-brand" href="/dashboard">
+        <img src="/images/logo-premium.svg" alt="">
+        <span>
+          <b>EAST LOS SANTOS</b>
+          <strong>HOSPITAL</strong>
+          <small>EMS | MAJESTIC RP</small>
+        </span>
       </a>
-      <div class="header-actions">
-        <a class="public-site-link" href="https://emsmajestic.ru" target="_blank" rel="noopener noreferrer">Открыть сайт ↗</a>
-        <a class="logout-button" href="/auth/logout">Выйти</a>
+
+      <nav class="side-nav">
+        <a class="nav-item active" href="/dashboard">
+          <span class="nav-ico">⌂</span><span>Главная</span>
+        </a>
+
+        <div class="nav-section">КАДРОВЫЕ СЕРВИСЫ</div>
+
+        <a class="nav-item" href="/forms/vacation-ooc"><span class="nav-ico">▣</span><span>Отпуска</span></a>
+        <a class="nav-item" href="/forms/promotion"><span class="nav-ico">↗</span><span>Карьера</span></a>
+        <a class="nav-item" href="/forms/weekly-report"><span class="nav-ico">▤</span><span>Отчётность</span></a>
+        <a class="nav-item" href="/forms/staff-department-transfer"><span class="nav-ico">⇄</span><span>Переводы</span></a>
+        <a class="nav-item" href="/forms/blacklist"><span class="nav-ico">◈</span><span>Контроль</span></a>
+        <a class="nav-item" href="/forms/department-transfer"><span class="nav-ico">♟</span><span>Отделы</span></a>
+      </nav>
+
+      <div class="support-card">
+        <div class="support-icon">⌁</div>
+        <strong>Техническая поддержка</strong>
+        <p>Если возникли проблемы с порталом, обратитесь к администрации EMS.</p>
       </div>
+    </aside>
+
+    <div class="main-area">
+      <main class="content">
+        <section class="welcome-banner">
+          <div class="welcome-copy">
+            <span class="welcome-kicker">EMS PERSONNEL SYSTEM</span>
+            <p class="welcome-small">Добро пожаловать,</p>
+            <h1><%= user.global_name || user.username %> <span class="verified">✓</span></h1>
+
+            <div class="identity-row">
+              <div class="identity-chip">
+                <span class="chip-icon">◉</span>
+                <span>Discord: <b><%= user.username %></b></span>
+              </div>
+              <div class="identity-chip online"><i></i>Онлайн</div>
+            </div>
+          </div>
+
+          <div class="banner-actions">
+            <a class="header-button site" href="https://emsmajestic.ru" target="_blank" rel="noopener noreferrer">
+              <span>◎</span> Официальный сайт
+            </a>
+            <a class="header-button logout" href="/auth/logout">
+              <span>⇥</span> Выйти
+            </a>
+          </div>
+
+          <img class="banner-art" src="/images/ems-command-hero.svg" alt="East Los Santos Hospital">
+        </section>
+
+        <section class="section-head">
+          <div>
+            <div class="section-title-row">
+              <span class="dot-grid">⠿</span>
+              <h2>Кадровые сервисы</h2>
+            </div>
+            <p>Все внутренние заявления и запросы собраны в одном кабинете.</p>
+          </div>
+
+          <div class="service-count">
+            <span class="count-icon">▣</span>
+            <strong>9</strong>
+            <small>доступных сервисов</small>
+          </div>
+        </section>
+
+        <section class="services-grid">
+          <a class="service-card blue" href="/forms/vacation-ooc">
+            <div class="service-card-main">
+              <div class="service-visual">
+                <div class="service-icon-ring"><img src="/images/service-ooc.svg" alt=""></div>
+              </div>
+              <div class="service-copy">
+                <div class="service-head">
+                  <h3>OOC-отпуск</h3>
+                  <span class="service-badge">ОТПУСК</span>
+                </div>
+                <p>Заявление на отпуск по причинам вне игрового процесса.</p>
+              </div>
+            </div>
+            <div class="service-footer">
+              <strong>ОТКРЫТЬ ФОРМУ</strong><span class="service-arrow">→</span>
+            </div>
+          </a>
+
+          <a class="service-card green" href="/forms/vacation-ic">
+            <div class="service-card-main">
+              <div class="service-visual">
+                <div class="service-icon-ring"><img src="/images/service-ic.svg" alt=""></div>
+              </div>
+              <div class="service-copy">
+                <div class="service-head">
+                  <h3>IC-отпуск</h3>
+                  <span class="service-badge">ОТПУСК</span>
+                </div>
+                <p>Заявление на отпуск по внутриигровой причине.</p>
+              </div>
+            </div>
+            <div class="service-footer">
+              <strong>ОТКРЫТЬ ФОРМУ</strong><span class="service-arrow">→</span>
+            </div>
+          </a>
+
+          <a class="service-card orange" href="/auth/resignation">
+            <div class="service-card-main">
+              <div class="service-visual">
+                <div class="service-icon-ring"><img src="/images/service-out.svg" alt=""></div>
+              </div>
+              <div class="service-copy">
+                <div class="service-head">
+                  <h3>Увольнение</h3>
+                  <span class="service-badge">КАДРЫ</span>
+                </div>
+                <p>Заявление на увольнение из Emergency Medical Services.</p>
+              </div>
+            </div>
+            <div class="service-footer">
+              <strong>ОТКРЫТЬ ФОРМУ</strong><span class="service-arrow">→</span>
+            </div>
+          </a>
+
+          <a class="service-card purple" href="/forms/break">
+            <div class="service-card-main">
+              <div class="service-visual">
+                <div class="service-icon-ring"><img src="/images/service-break.svg" alt=""></div>
+              </div>
+              <div class="service-copy">
+                <div class="service-head">
+                  <h3>Перерыв</h3>
+                  <span class="service-badge">СЛУЖБА</span>
+                </div>
+                <p>Оформление временного перерыва сотрудника EMS.</p>
+              </div>
+            </div>
+            <div class="service-footer">
+              <strong>ОТКРЫТЬ ФОРМУ</strong><span class="service-arrow">→</span>
+            </div>
+          </a>
+
+          <a class="service-card gold" href="/forms/promotion">
+            <div class="service-card-main">
+              <div class="service-visual">
+                <div class="service-icon-ring"><img src="/images/service-up.svg" alt=""></div>
+              </div>
+              <div class="service-copy">
+                <div class="service-head">
+                  <h3>Запрос на повышение</h3>
+                  <span class="service-badge">КАРЬЕРА</span>
+                </div>
+                <p>Заявление на рассмотрение повышения сотрудника.</p>
+              </div>
+            </div>
+            <div class="service-footer">
+              <strong>ОТКРЫТЬ ФОРМУ</strong><span class="service-arrow">→</span>
+            </div>
+          </a>
+
+          <a class="service-card blue2" href="/forms/weekly-report">
+            <div class="service-card-main">
+              <div class="service-visual">
+                <div class="service-icon-ring"><img src="/images/service-weekly.svg" alt=""></div>
+              </div>
+              <div class="service-copy">
+                <div class="service-head">
+                  <h3>Недельный отчёт</h3>
+                  <span class="service-badge">ОТЧЁТНОСТЬ</span>
+                </div>
+                <p>Отчёт о работе сотрудника EMS за прошедшую неделю.</p>
+              </div>
+            </div>
+            <div class="service-footer">
+              <strong>ЗАПОЛНИТЬ ОТЧЁТ</strong><span class="service-arrow">→</span>
+            </div>
+          </a>
+
+          <a class="service-card cyan" href="/forms/staff-department-transfer">
+            <div class="service-card-main">
+              <div class="service-visual">
+                <div class="service-icon-ring"><img src="/images/service-transfer.svg" alt=""></div>
+              </div>
+              <div class="service-copy">
+                <div class="service-head">
+                  <h3>Служебный перевод</h3>
+                  <span class="service-badge">ПЕРЕВОДЫ</span>
+                </div>
+                <p>Перевод сотрудника между подразделениями.</p>
+              </div>
+            </div>
+            <div class="service-footer">
+              <strong>ОТКРЫТЬ ФОРМУ</strong><span class="service-arrow">→</span>
+            </div>
+          </a>
+
+          <a class="service-card pink" href="/forms/department-transfer">
+            <div class="service-card-main">
+              <div class="service-visual">
+                <div class="service-icon-ring"><img src="/images/service-department.svg" alt=""></div>
+              </div>
+              <div class="service-copy">
+                <div class="service-head">
+                  <h3>Заявка в отдел</h3>
+                  <span class="service-badge">ОТДЕЛЫ</span>
+                </div>
+                <p>Подача заявки на перевод в выбранный отдел EMS.</p>
+              </div>
+            </div>
+            <div class="service-footer">
+              <strong>ОТКРЫТЬ ФОРМУ</strong><span class="service-arrow">→</span>
+            </div>
+          </a>
+
+          <a class="service-card red" href="/forms/blacklist">
+            <div class="service-card-main">
+              <div class="service-visual">
+                <div class="service-icon-ring"><img src="/images/service-blacklist.svg" alt=""></div>
+              </div>
+              <div class="service-copy">
+                <div class="service-head">
+                  <h3>Чёрный список</h3>
+                  <span class="service-badge">КОНТРОЛЬ</span>
+                </div>
+                <p>Запрос на добавление сотрудника в чёрный список EMS.</p>
+              </div>
+            </div>
+            <div class="service-footer">
+              <strong>ОТКРЫТЬ ФОРМУ</strong><span class="service-arrow">→</span>
+            </div>
+          </a>
+        </section>
+      </main>
     </div>
-  </header>
-
-  <main class="portal-container dashboard">
-    <section class="profile-card">
-      <div class="profile-main">
-        <div class="avatar-wrap">
-          <% if (user.avatar) { %>
-            <img class="avatar" src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png?size=256" alt="Discord avatar">
-          <% } else { %>
-            <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Discord avatar">
-          <% } %>
-          <span class="online-indicator"></span>
-        </div>
-        <div class="profile-info">
-          <span class="profile-kicker">Личный кабинет сотрудника</span>
-          <h1>Добро пожаловать, <span><%= user.global_name || user.username %></span></h1>
-          <p>Выберите необходимый кадровый сервис. Отправленная заявка автоматически поступит в соответствующий Discord-канал EMS.</p>
-        </div>
-      </div>
-      <div class="profile-meta">
-        <div class="meta-item"><span>Discord username</span><strong><%= user.username %></strong></div>
-        <div class="meta-item"><span>Discord ID</span><strong><%= user.id %></strong></div>
-        <div class="meta-item"><span>Статус портала</span><strong class="portal-status"><i></i>Online</strong></div>
-      </div>
-    </section>
-
-    <section class="dashboard-intro">
-      <div><span class="section-kicker">Кадровые сервисы</span><h2>Формы EMS</h2><p>Все внутренние заявления и запросы собраны в едином кабинете.</p></div>
-      <div class="dashboard-stat"><strong>8</strong><span>доступных сервисов</span></div>
-    </section>
-
-    <section class="forms-grid">
-      <a class="service-card ooc" href="/forms/vacation-ooc"><div class="service-top"><span class="service-icon">🌴</span><span class="service-badge">Отпуск</span></div><h3>OOC-отпуск</h3><p>Заявление на отпуск по причинам вне игрового процесса.</p><span class="service-link">Открыть форму <b>→</b></span></a>
-      <a class="service-card ic" href="/forms/vacation-ic"><div class="service-top"><span class="service-icon">🏥</span><span class="service-badge">Отпуск</span></div><h3>IC-отпуск</h3><p>Заявление на отпуск по внутриигровой причине.</p><span class="service-link">Открыть форму <b>→</b></span></a>
-      <a class="service-card danger" href="/auth/resignation"><div class="service-top"><span class="service-icon">📤</span><span class="service-badge">Кадры</span></div><h3>Увольнение</h3><p>Заявление на увольнение из Emergency Medical Services.</p><span class="service-link">Открыть форму <b>→</b></span></a>
-      <a class="service-card break" href="/forms/break"><div class="service-top"><span class="service-icon">☕</span><span class="service-badge">Служба</span></div><h3>Перерыв</h3><p>Оформление временного перерыва сотрудника EMS.</p><span class="service-link">Открыть форму <b>→</b></span></a>
-      <a class="service-card promotion" href="/forms/promotion"><div class="service-top"><span class="service-icon">📈</span><span class="service-badge">Карьера</span></div><h3>Запрос на повышение</h3><p>Заявление на рассмотрение повышения сотрудника.</p><span class="service-link">Открыть форму <b>→</b></span></a>
-      <article class="service-card disabled"><div class="service-top"><span class="service-icon">📋</span><span class="service-badge">Скоро</span></div><h3>Недельный отчёт</h3><p>Отчёт о работе сотрудника EMS за прошедшую неделю.</p><span class="service-link">В разработке</span></article>
-      <a class="service-card transfer" href="/forms/staff-department-transfer"><div class="service-top"><span class="service-icon">🔁</span><span class="service-badge">Старший состав</span></div><h3>Служебный перевод</h3><p>Оформление перевода сотрудника между отделами старшим составом EMS.</p><span class="service-link">Открыть форму <b>→</b></span></a>
-      <a class="service-card department" href="/forms/department-transfer"><div class="service-top"><span class="service-icon">📨</span><span class="service-badge">Отделы</span></div><h3>Заявка в отдел</h3><p>Подача заявки на перевод в выбранный отдел EMS.</p><span class="service-link">Открыть форму <b>→</b></span></a>
-      <a class="service-card blacklist" href="/forms/blacklist"><div class="service-top"><span class="service-icon">⛔</span><span class="service-badge">Контроль</span></div><h3>Чёрный список</h3><p>Запрос на добавление сотрудника в чёрный список EMS.</p><span class="service-link">Открыть форму <b>→</b></span></a>
-    </section>
-  </main>
-
-  <footer class="portal-footer"><div class="portal-container footer-inner"><div class="footer-brand"><img src="/images/logo-mark.svg" alt=""><div><strong>EMS Majestic RP</strong><span>East Los Santos Hospital</span></div></div><p>© <span id="year"></span> EMS Department. Внутренний портал сотрудников.</p></div></footer>
-  <script src="/js/portal-ui.js"></script>
+  </div>
 </body>
 </html>

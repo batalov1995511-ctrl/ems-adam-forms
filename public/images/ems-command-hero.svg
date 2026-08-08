@@ -1,0 +1,64 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <linearGradient id="bg" x1="104" y1="55" x2="1092" y2="708" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#14253B"/>
+    <stop offset=".55" stop-color="#0A1625"/>
+    <stop offset="1" stop-color="#050B13"/>
+  </linearGradient>
+  <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+    <stop stop-color="#4E718E" stop-opacity=".36"/>
+    <stop offset="1" stop-color="#152B41" stop-opacity=".05"/>
+  </linearGradient>
+  <linearGradient id="red" x1="530" y1="117" x2="762" y2="512">
+    <stop stop-color="#FF5D68"/>
+    <stop offset="1" stop-color="#B7162B"/>
+  </linearGradient>
+  <filter id="glow"><feGaussianBlur stdDeviation="18"/></filter>
+  <filter id="soft"><feGaussianBlur stdDeviation="7"/></filter>
+</defs>
+<rect width="1200" height="760" rx="44" fill="url(#bg)"/>
+<circle cx="991" cy="141" r="250" fill="#E52D41" fill-opacity=".11"/>
+<circle cx="157" cy="611" r="235" fill="#2A80C8" fill-opacity=".09"/>
+<g opacity=".18">
+  <path d="M0 126H1200M0 252H1200M0 378H1200M0 504H1200M0 630H1200" stroke="#98B4D0"/>
+  <path d="M160 0V760M320 0V760M480 0V760M640 0V760M800 0V760M960 0V760M1120 0V760" stroke="#98B4D0"/>
+</g>
+<path d="M698 116h164v87h84v332H404V203h88v-87h206Z" fill="#0D1D2D" stroke="#36526B" stroke-width="4"/>
+<path d="M492 203h370M404 288h542M404 374h542M404 460h542" stroke="#253D54" stroke-width="3"/>
+<g fill="url(#glass)" stroke="#44647C" stroke-width="2">
+  <rect x="453" y="235" width="76" height="32" rx="6"/><rect x="551" y="235" width="76" height="32" rx="6"/><rect x="649" y="235" width="76" height="32" rx="6"/><rect x="747" y="235" width="76" height="32" rx="6"/>
+  <rect x="453" y="320" width="76" height="32" rx="6"/><rect x="551" y="320" width="76" height="32" rx="6"/><rect x="649" y="320" width="76" height="32" rx="6"/><rect x="747" y="320" width="76" height="32" rx="6"/>
+  <rect x="453" y="406" width="76" height="32" rx="6"/><rect x="551" y="406" width="76" height="32" rx="6"/><rect x="649" y="406" width="76" height="32" rx="6"/><rect x="747" y="406" width="76" height="32" rx="6"/>
+</g>
+<rect x="607" y="126" width="64" height="141" rx="10" fill="#E43849" fill-opacity=".14"/>
+<path d="M639 145v102M588 196h102" stroke="url(#red)" stroke-width="30" stroke-linecap="round"/>
+<path d="M441 547h467" stroke="#425E77" stroke-width="5"/>
+<path d="M542 547v-55c0-12 10-22 22-22h224c12 0 22 10 22 22v55" fill="#091522" stroke="#39536A" stroke-width="3"/>
+<path d="M571 503h210" stroke="#E23A4C" stroke-width="4" stroke-linecap="round" opacity=".75"/>
+
+<!-- ambulance -->
+<g transform="translate(145 470)">
+  <ellipse cx="217" cy="165" rx="210" ry="30" fill="#000" fill-opacity=".28" filter="url(#soft)"/>
+  <path d="M41 77c5-25 28-43 54-43h205c20 0 39 11 49 29l41 73v33H13v-56c0-18 11-33 28-36Z" fill="#E9EDF2" stroke="#6B7E90" stroke-width="4"/>
+  <path d="M93 34h134v84H70l23-84Z" fill="#DCE5EE"/>
+  <path d="M229 34h71c20 0 38 11 48 28l29 53H229V34Z" fill="#20384C"/>
+  <path d="M87 48h125v54H74l13-54Z" fill="#1B354A"/>
+  <rect x="104" y="6" width="55" height="16" rx="8" fill="#E73849"/>
+  <rect x="170" y="6" width="55" height="16" rx="8" fill="#397FD1"/>
+  <path d="M136 117v-57M108 88h56" stroke="#DA2D3F" stroke-width="12" stroke-linecap="round"/>
+  <rect x="18" y="126" width="373" height="30" fill="#C82336"/>
+  <circle cx="90" cy="169" r="34" fill="#07101A" stroke="#8AA0B5" stroke-width="5"/>
+  <circle cx="90" cy="169" r="13" fill="#4C5E6E"/>
+  <circle cx="315" cy="169" r="34" fill="#07101A" stroke="#8AA0B5" stroke-width="5"/>
+  <circle cx="315" cy="169" r="13" fill="#4C5E6E"/>
+  <rect x="327" y="88" width="61" height="17" rx="6" fill="#F5D270"/>
+</g>
+
+<!-- ECG -->
+<path d="M78 341h149l37-55 35 103 39-83 28 35h148" stroke="#F04A58" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity=".85"/>
+<circle cx="842" cy="191" r="92" fill="#E73346" fill-opacity=".13" filter="url(#glow)"/>
+<circle cx="842" cy="191" r="48" stroke="#F45662" stroke-width="2" opacity=".55"/>
+<path d="M842 162v58M813 191h58" stroke="#FA6873" stroke-width="11" stroke-linecap="round"/>
+<text x="930" y="634" fill="#71869B" font-family="Arial" font-size="18" font-weight="700" letter-spacing="3">EAST LOS SANTOS HOSPITAL</text>
+<text x="930" y="665" fill="#E54656" font-family="Arial" font-size="14" font-weight="700" letter-spacing="5">EMS / PERSONNEL SYSTEM</text>
+</svg>

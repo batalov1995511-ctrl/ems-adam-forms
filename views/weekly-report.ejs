@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMS — Недельный отчёт</title>
+  <link rel="stylesheet" href="/css/weekly-report.css">
+  <link rel="stylesheet" href="/css/forms-theme.css">
+</head>
+<body>
+  <main class="shell">
+    <a class="back" href="/dashboard">← Вернуться в кабинет</a>
+
+    <section class="hero">
+      <span class="eyebrow">EMS Majestic RP</span>
+      <h1>Недельный отчёт</h1>
+      <p>Сначала выберите отдел и ранг. Форма автоматически подстроится под ваш выбор.</p>
+
+      <div class="userbox">
+        <small>Discord</small>
+        <strong><%= user.global_name || user.username %></strong>
+        <span>ID: <%= user.id %></span>
+      </div>
+    </section>
+
+    <form id="weeklyForm" method="POST" action="/forms/weekly-report">
+      <section class="card">
+        <h2>1. Основные данные</h2>
+
+        <div class="grid two">
+          <label>
+            <span>Отдел *</span>
+            <select id="department" name="department" required>
+              <option value="">Выберите отдел</option>
+              <% departments.forEach((department) => { %>
+                <option value="<%= department %>"><%= department %></option>
+              <% }) %>
+            </select>
+          </label>
+
+          <label>
+            <span>Ранг *</span>
+            <select id="rank" name="rank" required disabled>
+              <option value="">Сначала выберите отдел</option>
+              <% Object.keys(ranks).forEach((rank) => { %>
+                <option value="<%= rank %>"><%= rank %> | <%= ranks[rank] %></option>
+              <% }) %>
+            </select>
+          </label>
+        </div>
+
+        <div id="hint" class="hint" hidden></div>
+      </section>
+
+      <section id="dynamic" class="card" hidden>
+        <div class="heading-row">
+          <h2 id="title">2. Данные отчёта</h2>
+          <span id="badge" class="badge"></span>
+        </div>
+
+        <div id="fields" class="grid two"></div>
+      </section>
+
+      <section id="submitWrap" class="submit-card" hidden>
+        <div>
+          <strong>Проверьте данные перед отправкой</strong>
+          <p>Отчёт автоматически уйдёт в нужный Discord-канал.</p>
+        </div>
+
+        <button type="submit">Отправить отчёт →</button>
+      </section>
+    </form>
+  </main>
+
+  <script src="/js/weekly-report.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMS — Отчёт отправлен</title>
+  <link rel="stylesheet" href="/css/weekly-report.css">
+  <link rel="stylesheet" href="/css/forms-theme.css">
+</head>
+<body>
+  <main class="success-shell">
+    <section class="success">
+      <div class="check">✓</div>
+      <span class="eyebrow">EMS Majestic RP</span>
+      <h1>Отчёт отправлен</h1>
+      <p>Недельный отчёт успешно отправлен в Discord.</p>
+
+      <div class="success-grid">
+        <div><small>Отдел</small><strong><%= department %></strong></div>
+        <div><small>Ранг</small><strong><%= rank %> | <%= rankName %></strong></div>
+        <div><small>Маршрут</small><strong><%= isSenior ? "Старший состав" : "Канал отдела" %></strong></div>
+      </div>
+
+      <div class="actions">
+        <a class="primary" href="/dashboard">В кабинет</a>
+        <a class="secondary" href="/forms/weekly-report">Ещё один отчёт</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
