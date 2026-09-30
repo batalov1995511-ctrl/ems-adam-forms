@@ -7,7 +7,8 @@
     "start": "node app.js",
     "dev": "nodemon app.js",
     "db:migrate": "node scripts/migrate.js",
-    "check": "node --check app.js && node --check routes/auth.js && node --check database.js && node --check models/users.js"
+    "check": "node --check app.js && node --check routes/auth.js && node --check database.js && node --check models/users.js",
+    "prestart": "npm run check"
   },
   "keywords": [],
   "author": "",
@@ -25,5 +26,8 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }
