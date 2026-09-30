@@ -1,0 +1,1 @@
+const express=require("express");const {requireControl}=require("../middleware/auth");const router=express.Router();router.get("/",requireControl,(req,res)=>res.render("control",{user:req.session.user,coreUser:req.session.coreUser}));module.exports=router;
