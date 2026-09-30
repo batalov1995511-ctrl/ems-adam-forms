@@ -1,12 +1,4 @@
-const { query } = require("../database");
-async function upsertDiscordUser(user) {
- const result=await query(
-  `INSERT INTO users(discord_id,discord_username,discord_global_name,discord_avatar,last_login_at)
-   VALUES($1,$2,$3,$4,NOW())
-   ON CONFLICT(discord_id) DO UPDATE SET discord_username=EXCLUDED.discord_username,
-   discord_global_name=EXCLUDED.discord_global_name,discord_avatar=EXCLUDED.discord_avatar,
-   last_login_at=NOW(),updated_at=NOW() RETURNING *`,
-  [String(user.id),user.username||null,user.global_name||null,user.avatar||null]);
- return result.rows[0];
-}
-module.exports={upsertDiscordUser};
+const {query}=require("../database");
+async function upsertDiscordUser(user){const r=await query(`INSERT INTO users(discord_id,discord_username,discord_global_name,discord_avatar,last_login_at) VALUES($1,$2,$3,$4,NOW()) ON CONFLICT(discord_id) DO UPDATE SET discord_username=EXCLUDED.discord_username,discord_global_name=EXCLUDED.discord_global_name,discord_avatar=EXCLUDED.discord_avatar,last_login_at=NOW(),updated_at=NOW() RETURNING *`,[String(user.id),user.username||null,user.global_name||null,user.avatar||null]);return r.rows[0];}
+async function getPermissions(userId){const r=await query(`SELECT DISTINCT p.code FROM permissions p JOIN role_permissions rp ON rp.permission_id=p.id JOIN roles r ON r.id=rp.role_id LEFT JOIN user_roles ur ON ur.role_id=r.id AND ur.user_id=$1 JOIN users u ON u.id=$1 WHERE ur.user_id IS NOT NULL OR r.code=u.access_level ORDER BY p.code`,[userId]);return r.rows.map(x=>x.code);}
+module.exports={upsertDiscordUser,getPermissions};

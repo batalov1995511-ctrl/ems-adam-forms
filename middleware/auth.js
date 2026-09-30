@@ -1,3 +1,4 @@
 function requireAuth(req,res,next){if(!req.session||!req.session.user)return res.redirect("/auth/discord");next();}
-function requireControl(req,res,next){const u=req.session&&req.session.coreUser;if(!u||!["chief","tech_admin"].includes(u.access_level))return res.status(403).send("EMS Core: access denied");next();}
-module.exports={requireAuth,requireControl};
+function requirePermission(code){return function(req,res,next){if(!req.session||!req.session.user)return res.redirect("/auth/discord");const permissions=Array.isArray(req.session.permissions)?req.session.permissions:[];if(!permissions.includes(code))return res.status(403).render("error",{status:403,title:"Нет доступа",message:"У вашей учётной записи нет прав для этого раздела."});next();};}
+const requireControl=requirePermission("control.access");
+module.exports={requireAuth,requirePermission,requireControl};
