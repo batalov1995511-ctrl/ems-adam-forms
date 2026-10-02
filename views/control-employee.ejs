@@ -1,0 +1,138 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Сотрудник · EMS Pulse</title>
+  <link rel="stylesheet" href="/css/core.css">
+</head>
+<body>
+
+<main class="pulse-shell">
+
+<header class="pulse-topbar">
+  <a class="pulse-brand" href="/control">
+    <span class="pulse-mark">♥</span>
+    <span>
+      <strong>EMS PULSE</strong>
+      <small>Профиль сотрудника</small>
+    </span>
+  </a>
+
+  <nav>
+    <a class="ghost" href="/control/employees">← Сотрудники</a>
+    <a class="ghost" href="/dashboard">Рабочая зона</a>
+  </nav>
+</header>
+
+<section class="pulse-hero compact">
+  <div>
+    <span class="eyebrow">КАРТОЧКА СОТРУДНИКА</span>
+
+    <h1>
+      <%= employee.character_name ||
+          employee.discord_global_name ||
+          employee.discord_username ||
+          ("Сотрудник #" + employee.id) %>
+    </h1>
+
+    <p>Служебные и системные данные сотрудника EMS.</p>
+  </div>
+
+  <span class="status-pill <%= employee.profile_status === 'approved' ? 'ok' : 'pending' %>">
+    <%= employee.profile_status %>
+  </span>
+</section>
+
+<section class="stats-grid">
+
+  <article class="info-card">
+    <span>Discord</span>
+    <strong><%= employee.discord_username || "—" %></strong>
+    <p><%= employee.discord_global_name || "Связанная учётная запись" %></p>
+  </article>
+
+  <article class="info-card">
+    <span>Static ID</span>
+    <strong><%= employee.static_id || "—" %></strong>
+    <p>Игровой идентификатор</p>
+  </article>
+
+  <article class="info-card">
+    <span>Отдел</span>
+    <strong><%= employee.department_code || "Не назначен" %></strong>
+    <p><%= employee.department_name || "Подразделение не назначено" %></p>
+  </article>
+
+  <article class="info-card">
+    <span>Ранг</span>
+    <strong><%= employee.rank || "—" %></strong>
+    <p>Служебный ранг</p>
+  </article>
+
+</section>
+
+<section class="panel">
+
+  <div class="panel-heading">
+    <div>
+      <span class="eyebrow">ДОСТУП И СОСТОЯНИЕ</span>
+      <h2>Системный профиль</h2>
+    </div>
+
+    <span class="<%= employee.is_active ? 'live' : 'soon' %>">
+      <%= employee.is_active ? "Активен" : "Отключён" %>
+    </span>
+  </div>
+
+  <div class="system-strip">
+
+    <div>
+      <b>Уровень доступа</b>
+      <span><%= employee.access_level || "employee" %></span>
+    </div>
+
+    <div>
+      <b>Роли</b>
+      <span>
+        <%= employee.roles && employee.roles.length
+          ? employee.roles.join(", ")
+          : "Не назначены" %>
+      </span>
+    </div>
+
+    <div>
+      <b>Статус профиля</b>
+      <span><%= employee.profile_status || "pending" %></span>
+    </div>
+
+    <div>
+      <b>Последний вход</b>
+      <span>
+        <%= employee.last_login_at
+          ? new Date(employee.last_login_at).toLocaleString("ru-RU")
+          : "—" %>
+      </span>
+    </div>
+
+  </div>
+
+  <% if (canManage) { %>
+
+  <div class="manage-note">
+    <strong>Управление сотрудником доступно</strong>
+    <p>
+      В следующем этапе здесь появится изменение отдела, ранга,
+      кадрового статуса и уровня доступа с записью каждого действия
+      в журнал EMS Pulse.
+    </p>
+  </div>
+
+  <% } %>
+
+</section>
+
+</main>
+
+</body>
+</html>

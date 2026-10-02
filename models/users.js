@@ -1,4 +1,122 @@
-const {query}=require("../database");
-async function upsertDiscordUser(user){const r=await query(`INSERT INTO users(discord_id,discord_username,discord_global_name,discord_avatar,last_login_at) VALUES($1,$2,$3,$4,NOW()) ON CONFLICT(discord_id) DO UPDATE SET discord_username=EXCLUDED.discord_username,discord_global_name=EXCLUDED.discord_global_name,discord_avatar=EXCLUDED.discord_avatar,last_login_at=NOW(),updated_at=NOW() RETURNING *`,[String(user.id),user.username||null,user.global_name||null,user.avatar||null]);return r.rows[0];}
-async function getPermissions(userId){const r=await query(`SELECT DISTINCT p.code FROM permissions p JOIN role_permissions rp ON rp.permission_id=p.id JOIN roles r ON r.id=rp.role_id LEFT JOIN user_roles ur ON ur.role_id=r.id AND ur.user_id=$1 JOIN users u ON u.id=$1 WHERE ur.user_id IS NOT NULL OR r.code=u.access_level ORDER BY p.code`,[userId]);return r.rows.map(x=>x.code);}
-module.exports={upsertDiscordUser,getPermissions};
+﻿const { query } = require("../database");
+
+async function upsertDiscordUser(user) {
+  const result = await query(
+    `INSERT INTO users (
+      discord_id,
+      discord_username,
+      discord_global_name,
+      discord_avatar,
+      last_login_at
+    )
+    VALUES ($1, $2, $3, $4, NOW())
+    ON CONFLICT (discord_id)
+    DO UPDATE SET
+      discord_username = EXCLUDED.discord_username,
+      discord_global_name = EXCLUDED.discord_global_name,
+      discord_avatar = EXCLUDED.discord_avatar,
+      last_login_at = NOW(),
+      updated_at = NOW()
+    RETURNING *`,
+    [
+      String(user.id),
+      user.username || null,
+      user.global_name || null,
+      user.avatar || null
+    ]
+  );
+
+  return result.rows[0];
+}
+
+async function getPermissions(userId) {
+  const result = await query(
+    `SELECT DISTINCT p.code
+     FROM permissions p
+     JOIN role_permissions rp
+       ON rp.permission_id = p.id
+     JOIN roles r
+       ON r.id = rp.role_id
+     LEFT JOIN user_roles ur
+       ON ur.role_id = r.id
+      AND ur.user_id = $1
+     JOIN users u
+       ON u.id = $1
+     WHERE ur.user_id IS NOT NULL
+        OR r.code = u.access_level
+     ORDER BY p.code`,
+    [userId]
+  );
+
+  return result.rows.map(row => row.code);
+}
+
+async function listEmployees() {
+  const result = await query(
+    `SELECT
+       u.id,
+       u.discord_username,
+       u.discord_global_name,
+       u.character_name,
+       u.static_id,
+       u.department_code,
+       u.rank,
+       u.profile_status,
+       u.access_level,
+       u.is_active,
+       u.last_login_at,
+       d.name AS department_name,
+       COALESCE(
+         array_agg(DISTINCT r.code)
+           FILTER (WHERE r.code IS NOT NULL),
+         '{}'
+       ) AS roles
+     FROM users u
+     LEFT JOIN departments d
+       ON d.code = u.department_code
+     LEFT JOIN user_roles ur
+       ON ur.user_id = u.id
+     LEFT JOIN roles r
+       ON r.id = ur.role_id
+     GROUP BY u.id, d.name
+     ORDER BY COALESCE(
+       u.character_name,
+       u.discord_global_name,
+       u.discord_username
+     ) ASC`
+  );
+
+  return result.rows;
+}
+
+async function getEmployeeById(id) {
+  const result = await query(
+    `SELECT
+       u.*,
+       d.name AS department_name,
+       COALESCE(
+         array_agg(DISTINCT r.code)
+           FILTER (WHERE r.code IS NOT NULL),
+         '{}'
+       ) AS roles
+     FROM users u
+     LEFT JOIN departments d
+       ON d.code = u.department_code
+     LEFT JOIN user_roles ur
+       ON ur.user_id = u.id
+     LEFT JOIN roles r
+       ON r.id = ur.role_id
+     WHERE u.id = $1
+     GROUP BY u.id, d.name`,
+    [id]
+  );
+
+  return result.rows[0] || null;
+}
+
+module.exports = {
+  upsertDiscordUser,
+  getPermissions,
+  listEmployees,
+  getEmployeeById
+};

@@ -1,0 +1,151 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Сотрудники · EMS Pulse</title>
+  <link rel="stylesheet" href="/css/core.css">
+</head>
+<body>
+<main class="pulse-shell">
+
+<header class="pulse-topbar">
+  <a class="pulse-brand" href="/control">
+    <span class="pulse-mark">♥</span>
+    <span>
+      <strong>EMS PULSE</strong>
+      <small>Кадровый состав</small>
+    </span>
+  </a>
+
+  <nav>
+    <a class="ghost" href="/control">Pulse Control</a>
+    <a class="ghost" href="/dashboard">Рабочая зона</a>
+  </nav>
+</header>
+
+<section class="pulse-hero compact">
+  <div>
+    <span class="eyebrow">СОТРУДНИКИ</span>
+    <h1>Кадровый состав EMS</h1>
+    <p>Профили сотрудников, отделы, ранги и уровни доступа EMS Pulse.</p>
+  </div>
+
+  <div class="admin-badge">
+    <span>Всего профилей</span>
+    <strong><%= employees.length %></strong>
+  </div>
+</section>
+
+<section class="panel employee-tools">
+  <input
+    id="employeeSearch"
+    class="pulse-input"
+    type="search"
+    placeholder="Поиск по имени, Discord или Static ID"
+  >
+
+  <select id="departmentFilter" class="pulse-input">
+    <option value="">Все отделы</option>
+    <option value="HAD">HAD</option>
+    <option value="PSED">PSED</option>
+    <option value="PM">PM</option>
+    <option value="DI">DI</option>
+    <option value="SD">SD</option>
+    <option value="EMT">EMT</option>
+    <option value="none">Не назначен</option>
+  </select>
+
+  <select id="statusFilter" class="pulse-input">
+    <option value="">Все статусы</option>
+    <option value="approved">Одобрен</option>
+    <option value="pending">Ожидает</option>
+    <option value="rejected">Отклонён</option>
+  </select>
+</section>
+
+<section class="employee-list" id="employeeList">
+
+<% employees.forEach(function(employee) {
+  const displayName =
+    employee.character_name ||
+    employee.discord_global_name ||
+    employee.discord_username ||
+    ("Сотрудник #" + employee.id);
+%>
+
+<a
+  class="employee-row"
+  href="/control/employees/<%= employee.id %>"
+  data-search="<%= [displayName, employee.discord_username, employee.static_id].filter(Boolean).join(' ').toLowerCase() %>"
+  data-department="<%= employee.department_code || 'none' %>"
+  data-status="<%= employee.profile_status %>"
+>
+
+  <div class="employee-avatar">
+    <%= displayName.charAt(0).toUpperCase() %>
+  </div>
+
+  <div class="employee-main">
+    <strong><%= displayName %></strong>
+    <span>
+      Discord: <%= employee.discord_username || "—" %>
+      <% if (employee.static_id) { %>
+        · Static: <%= employee.static_id %>
+      <% } %>
+    </span>
+  </div>
+
+  <div class="employee-meta">
+    <span><%= employee.department_code || "Без отдела" %></span>
+    <span>Ранг <%= employee.rank || "—" %></span>
+  </div>
+
+  <span class="status-pill <%= employee.profile_status === 'approved' ? 'ok' : 'pending' %>">
+    <%= employee.profile_status %>
+  </span>
+
+  <span class="row-arrow">→</span>
+</a>
+
+<% }) %>
+
+<div class="empty-state" id="emptyState" hidden>
+  По заданным фильтрам сотрудников не найдено.
+</div>
+
+</section>
+</main>
+
+<script>
+const search = document.getElementById("employeeSearch");
+const department = document.getElementById("departmentFilter");
+const status = document.getElementById("statusFilter");
+const rows = [...document.querySelectorAll(".employee-row")];
+const empty = document.getElementById("emptyState");
+
+function filterEmployees() {
+  const query = search.value.trim().toLowerCase();
+  let visible = 0;
+
+  rows.forEach(row => {
+    const show =
+      (!query || row.dataset.search.includes(query)) &&
+      (!department.value || row.dataset.department === department.value) &&
+      (!status.value || row.dataset.status === status.value);
+
+    row.hidden = !show;
+
+    if (show) visible++;
+  });
+
+  empty.hidden = visible !== 0;
+}
+
+[search, department, status].forEach(element => {
+  element.addEventListener("input", filterEmployees);
+});
+</script>
+
+</body>
+</html>
