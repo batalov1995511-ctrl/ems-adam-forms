@@ -1,11 +1,14 @@
 {
   "name": "ems-adam-forms",
   "version": "1.0.0",
-  "description": "Discord OAuth + Google Forms",
+  "description": "EMS Majestic Portal and EMS Core",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "db:migrate": "node scripts/migrate.js",
+    "check": "node --check app.js && node --check routes/auth.js && node --check database.js && node --check models/users.js",
+    "prestart": "npm run check"
   },
   "keywords": [],
   "author": "",
@@ -16,9 +19,15 @@
     "dotenv": "^17.4.2",
     "ejs": "^6.0.1",
     "express": "^5.2.1",
-    "express-session": "^1.19.0"
+    "express-session": "^1.19.0",
+    "pg": "^8.16.3",
+    "connect-pg-simple": "^10.0.0",
+    "helmet": "^8.1.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

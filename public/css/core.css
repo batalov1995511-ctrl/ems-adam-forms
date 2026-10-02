@@ -1,0 +1,194 @@
+:root{--bg:#070a0d;--surface:#0d1319;--surface2:#111922;--line:#1f2d3a;--text:#f4f7fa;--muted:#8fa0b2;--red:#d83b4b;--green:#38d996}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 85% 0,#17101a 0,transparent 34%),var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif;min-height:100vh}.pulse-shell{max-width:1280px;margin:auto;padding:30px 34px 70px}.pulse-topbar{display:flex;justify-content:space-between;align-items:center;padding:10px 0 28px;border-bottom:1px solid var(--line)}.pulse-brand{display:flex;gap:12px;align-items:center;background:none;padding:0}.pulse-brand strong{display:block;letter-spacing:.16em;font-size:14px}.pulse-brand small{display:block;color:var(--muted);letter-spacing:.08em;margin-top:3px;font-size:10px}.pulse-mark{display:grid;place-items:center;width:40px;height:40px;border:1px solid #49303a;border-radius:12px;background:#1a1015;color:#ff5667;font-size:18px}.pulse-topbar nav{display:flex;gap:8px}.ghost{background:#0d141b;border:1px solid var(--line);padding:9px 13px}.pulse-hero{display:flex;justify-content:space-between;gap:30px;align-items:end;padding:54px 0 34px}.pulse-hero.compact{padding-bottom:24px}.eyebrow{color:#ff5868;letter-spacing:.18em;font-weight:800;font-size:11px}.pulse-hero h1{font-size:46px;line-height:1.05;margin:12px 0}.pulse-hero p{max-width:720px;font-size:16px}.admin-badge{min-width:150px;padding:16px 18px;border:1px solid #4a3521;background:#17130d;border-radius:14px}.admin-badge span,.info-card span{display:block;color:var(--muted);font-size:12px;margin-bottom:7px}.admin-badge strong{color:#efc56f;text-transform:uppercase}.control-grid,.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.stats-grid{grid-template-columns:repeat(4,1fr);margin-bottom:18px}.control-card,.info-card,.panel{background:linear-gradient(145deg,var(--surface2),var(--surface));border:1px solid var(--line);border-radius:17px}.control-card{min-height:235px;padding:22px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}.control-card:after{content:"";position:absolute;width:120px;height:120px;border:1px solid #253443;border-radius:50%;right:-65px;top:-65px}.card-icon{color:#64788d;font-size:12px;font-weight:800}.control-card h2{font-size:22px;margin:7px 0}.control-card p{line-height:1.55}.info-card{padding:22px;min-height:125px}.info-card strong{font-size:21px}.info-card p{font-size:12px;margin-bottom:0}.panel{margin-top:18px;padding:24px}.panel-heading,.profile-row{display:flex;justify-content:space-between;gap:20px;align-items:center}.panel h2{margin:6px 0 0}.system-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px}.system-strip div{background:#0a1015;border:1px solid #192631;border-radius:12px;padding:15px}.system-strip b,.system-strip span{display:block}.system-strip span{color:var(--muted);font-size:12px;margin-top:5px}.live,.soon,.status-pill{width:max-content;padding:6px 9px;border-radius:999px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em}.live,.status-pill.ok{color:#5be5aa;background:#0d2a20;border:1px solid #19543d}.soon,.status-pill.pending{color:#c1a87a;background:#211c13;border:1px solid #4a3b20}.profile-row{margin-top:20px;padding:18px;background:#0a1015;border:1px solid #192631;border-radius:13px}.profile-row p{margin-bottom:0}p{color:var(--muted)}a{color:#fff;text-decoration:none;font-weight:700;border-radius:9px}@media(max-width:900px){.control-grid{grid-template-columns:repeat(2,1fr)}.stats-grid,.system-strip{grid-template-columns:repeat(2,1fr)}}@media(max-width:620px){.pulse-shell{padding:20px 16px 50px}.pulse-topbar,.pulse-hero,.panel-heading,.profile-row{align-items:flex-start;flex-direction:column}.pulse-topbar nav{width:100%}.pulse-hero{padding-top:36px}.pulse-hero h1{font-size:36px}.control-grid,.stats-grid,.system-strip{grid-template-columns:1fr}.control-card{min-height:205px}}
+/* =========================================
+   EMS Pulse — Personnel
+   ========================================= */
+
+.control-card.clickable {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    background .18s ease;
+}
+
+.control-card.clickable:hover {
+  transform: translateY(-2px);
+  border-color: #43586b;
+  background: linear-gradient(145deg, #14202a, #0e151c);
+}
+
+.employee-tools {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 12px;
+  margin-top: 0;
+  margin-bottom: 18px;
+}
+
+.pulse-input {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 14px;
+
+  color: var(--text);
+  background: #0a1015;
+
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  outline: none;
+
+  font: inherit;
+}
+
+.pulse-input:focus {
+  border-color: #536b80;
+}
+
+.pulse-input option {
+  color: var(--text);
+  background: #0d1319;
+}
+
+.employee-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.employee-row {
+  display: grid;
+  grid-template-columns:
+    48px
+    minmax(220px, 1fr)
+    auto
+    auto
+    30px;
+
+  gap: 16px;
+  align-items: center;
+
+  padding: 15px 18px;
+
+  color: var(--text);
+  text-decoration: none;
+
+  background:
+    linear-gradient(
+      145deg,
+      var(--surface2),
+      var(--surface)
+    );
+
+  border: 1px solid var(--line);
+  border-radius: 14px;
+
+  transition:
+    border-color .18s ease,
+    transform .18s ease;
+}
+
+.employee-row:hover {
+  border-color: #43586b;
+  transform: translateX(2px);
+}
+
+.employee-avatar {
+  width: 44px;
+  height: 44px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 12px;
+
+  background: #1b1117;
+  border: 1px solid #50303a;
+
+  color: #ff6170;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.employee-main strong,
+.employee-main span,
+.employee-meta span {
+  display: block;
+}
+
+.employee-main strong {
+  font-size: 16px;
+}
+
+.employee-main span,
+.employee-meta span {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.employee-meta {
+  min-width: 110px;
+}
+
+.row-arrow {
+  color: #8195a9;
+  font-size: 20px;
+}
+
+.empty-state {
+  padding: 35px;
+
+  color: var(--muted);
+  text-align: center;
+
+  background: var(--surface);
+  border: 1px dashed var(--line);
+  border-radius: 14px;
+}
+
+.manage-note {
+  margin-top: 20px;
+  padding: 16px 18px;
+
+  background: #111812;
+  border: 1px solid #29452f;
+  border-radius: 12px;
+}
+
+.manage-note strong {
+  color: #67e6a7;
+}
+
+.manage-note p {
+  margin: 7px 0 0;
+}
+
+@media (max-width: 800px) {
+
+  .employee-tools {
+    grid-template-columns: 1fr;
+  }
+
+  .employee-row {
+    grid-template-columns: 44px 1fr auto;
+  }
+
+  .employee-meta {
+    grid-column: 2;
+  }
+
+  .employee-row .status-pill {
+    grid-column: 2;
+  }
+
+  .row-arrow {
+    grid-column: 3;
+    grid-row: 1 / span 3;
+  }
+}
+
+
+/* EMS Pulse Personnel v1 */
+.personnel-form{display:grid;gap:16px;margin-top:18px}.personnel-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.personnel-form label{display:grid;gap:7px;color:var(--muted);font-size:12px;font-weight:700}.personnel-form .wide{grid-column:1/-1}.pulse-button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;width:max-content;padding:0 18px;border:1px solid #7d2f3c;border-radius:10px;background:#5f1e29;color:#fff;font:inherit;font-weight:800;cursor:pointer;text-decoration:none}.pulse-button:hover{background:#742634}.check-label{display:flex!important;align-items:center;gap:10px!important;min-height:46px;padding:0 14px;border:1px solid var(--line);border-radius:11px;background:#0a1015}.check-label input{width:18px;height:18px}.form-error,.form-success{margin:0 0 18px;padding:14px 16px;border-radius:11px}.form-error{background:#2a1014;border:1px solid #6e2934;color:#ff9aa4}.form-success{background:#0d2a20;border:1px solid #19543d;color:#6beab2}.onboarding-callout{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:18px;padding:22px;border:1px solid #5a3d24;border-radius:16px;background:linear-gradient(145deg,#1b1510,#101316)}.onboarding-callout h2{margin:6px 0}.onboarding-callout p{margin:0;max-width:720px}.history-list{display:grid;gap:10px;margin-top:20px}.history-item{display:flex;justify-content:space-between;gap:20px;padding:16px;border:1px solid #192631;border-radius:12px;background:#0a1015}.history-item p{margin:5px 0 0}.history-meta{text-align:right;color:var(--muted);font-size:12px}.history-meta span,.history-meta time{display:block}.history-meta time{margin-top:5px}.control-link{border-color:#5a3d24;color:#efc56f}@media(max-width:700px){.personnel-grid{grid-template-columns:1fr}.onboarding-callout,.history-item{align-items:flex-start;flex-direction:column}.history-meta{text-align:left}}

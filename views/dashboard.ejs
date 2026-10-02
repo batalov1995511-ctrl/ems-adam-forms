@@ -25,6 +25,16 @@
           <span class="nav-ico">⌂</span><span>Главная</span>
         </a>
 
+        <a class="nav-item" href="/profile">
+          <span class="nav-ico">◉</span><span>Мой профиль</span>
+        </a>
+
+        <% if ((permissions || []).includes("control.access")) { %>
+        <a class="nav-item pulse-control-nav" href="/control">
+          <span class="nav-ico">◆</span><span>Pulse Control</span>
+        </a>
+        <% } %>
+
         <div class="nav-section">КАДРОВЫЕ СЕРВИСЫ</div>
 
         <a class="nav-item" href="/forms/vacation-ooc"><span class="nav-ico">▣</span><span>Отпуска</span></a>

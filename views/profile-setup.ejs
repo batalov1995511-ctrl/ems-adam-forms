@@ -1,0 +1,11 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Первичная настройка · EMS Pulse</title><link rel="stylesheet" href="/css/core.css"></head><body>
+<main class="pulse-shell"><header class="pulse-topbar"><a class="pulse-brand" href="/dashboard"><span class="pulse-mark">♥</span><span><strong>EMS PULSE</strong><small>Personnel onboarding</small></span></a><nav><a class="ghost" href="/dashboard">Рабочая зона</a></nav></header>
+<section class="pulse-hero compact"><div><span class="eyebrow">ПЕРВИЧНОЕ ЗАПОЛНЕНИЕ</span><h1>Служебный профиль</h1><p>Заполните данные один раз. После подтверждения EMS Pulse будет автоматически использовать их в кадровых формах.</p></div><span class="status-pill pending">Ожидает настройки</span></section>
+<section class="panel"><% if(error){ %><div class="form-error"><%= error %></div><% } %>
+<form method="post" action="/profile/setup" class="personnel-form">
+<label><span>Имя и фамилия персонажа</span><input class="pulse-input" name="character_name" required maxlength="120" value="<%= coreUser?.character_name || '' %>" placeholder="Adam Henson"></label>
+<label><span>Static ID</span><input class="pulse-input" name="static_id" required maxlength="30" value="<%= coreUser?.static_id || '' %>" placeholder="358187"></label>
+<label><span>Текущий отдел</span><select class="pulse-input" name="department_code" required><option value="">Выберите отдел</option><% departments.forEach(d=>{ %><option value="<%= d.code %>"><%= d.code %> — <%= d.name %></option><% }) %></select></label>
+<label><span>Текущий ранг</span><select class="pulse-input" name="rank" required><option value="">Выберите ранг</option><% for(let i=1;i<=15;i++){ %><option value="<%= i %>"><%= i %></option><% } %></select></label>
+<div class="manage-note"><strong>Важно</strong><p>Указанный отдел и ранг не дают дополнительных прав. Профиль будет иметь статус «ожидает подтверждения», пока данные не проверит уполномоченный сотрудник.</p></div>
+<button class="pulse-button" type="submit">Сохранить профиль</button></form></section></main></body></html>
