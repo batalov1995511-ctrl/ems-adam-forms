@@ -1,138 +1,19 @@
-﻿<!doctype html>
-<html lang="ru">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Сотрудник · EMS Pulse</title>
-  <link rel="stylesheet" href="/css/core.css">
-</head>
-<body>
-
-<main class="pulse-shell">
-
-<header class="pulse-topbar">
-  <a class="pulse-brand" href="/control">
-    <span class="pulse-mark">♥</span>
-    <span>
-      <strong>EMS PULSE</strong>
-      <small>Профиль сотрудника</small>
-    </span>
-  </a>
-
-  <nav>
-    <a class="ghost" href="/control/employees">← Сотрудники</a>
-    <a class="ghost" href="/dashboard">Рабочая зона</a>
-  </nav>
-</header>
-
-<section class="pulse-hero compact">
-  <div>
-    <span class="eyebrow">КАРТОЧКА СОТРУДНИКА</span>
-
-    <h1>
-      <%= employee.character_name ||
-          employee.discord_global_name ||
-          employee.discord_username ||
-          ("Сотрудник #" + employee.id) %>
-    </h1>
-
-    <p>Служебные и системные данные сотрудника EMS.</p>
-  </div>
-
-  <span class="status-pill <%= employee.profile_status === 'approved' ? 'ok' : 'pending' %>">
-    <%= employee.profile_status %>
-  </span>
-</section>
-
-<section class="stats-grid">
-
-  <article class="info-card">
-    <span>Discord</span>
-    <strong><%= employee.discord_username || "—" %></strong>
-    <p><%= employee.discord_global_name || "Связанная учётная запись" %></p>
-  </article>
-
-  <article class="info-card">
-    <span>Static ID</span>
-    <strong><%= employee.static_id || "—" %></strong>
-    <p>Игровой идентификатор</p>
-  </article>
-
-  <article class="info-card">
-    <span>Отдел</span>
-    <strong><%= employee.department_code || "Не назначен" %></strong>
-    <p><%= employee.department_name || "Подразделение не назначено" %></p>
-  </article>
-
-  <article class="info-card">
-    <span>Ранг</span>
-    <strong><%= employee.rank || "—" %></strong>
-    <p>Служебный ранг</p>
-  </article>
-
-</section>
-
-<section class="panel">
-
-  <div class="panel-heading">
-    <div>
-      <span class="eyebrow">ДОСТУП И СОСТОЯНИЕ</span>
-      <h2>Системный профиль</h2>
-    </div>
-
-    <span class="<%= employee.is_active ? 'live' : 'soon' %>">
-      <%= employee.is_active ? "Активен" : "Отключён" %>
-    </span>
-  </div>
-
-  <div class="system-strip">
-
-    <div>
-      <b>Уровень доступа</b>
-      <span><%= employee.access_level || "employee" %></span>
-    </div>
-
-    <div>
-      <b>Роли</b>
-      <span>
-        <%= employee.roles && employee.roles.length
-          ? employee.roles.join(", ")
-          : "Не назначены" %>
-      </span>
-    </div>
-
-    <div>
-      <b>Статус профиля</b>
-      <span><%= employee.profile_status || "pending" %></span>
-    </div>
-
-    <div>
-      <b>Последний вход</b>
-      <span>
-        <%= employee.last_login_at
-          ? new Date(employee.last_login_at).toLocaleString("ru-RU")
-          : "—" %>
-      </span>
-    </div>
-
-  </div>
-
-  <% if (canManage) { %>
-
-  <div class="manage-note">
-    <strong>Управление сотрудником доступно</strong>
-    <p>
-      В следующем этапе здесь появится изменение отдела, ранга,
-      кадрового статуса и уровня доступа с записью каждого действия
-      в журнал EMS Pulse.
-    </p>
-  </div>
-
-  <% } %>
-
-</section>
-
-</main>
-
-</body>
-</html>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Сотрудник · EMS Pulse</title><link rel="stylesheet" href="/css/core.css"></head><body><main class="pulse-shell">
+<header class="pulse-topbar"><a class="pulse-brand" href="/control"><span class="pulse-mark">♥</span><span><strong>EMS PULSE</strong><small>Профиль сотрудника</small></span></a><nav><a class="ghost" href="/control/employees">← Сотрудники</a><a class="ghost" href="/dashboard">Рабочая зона</a></nav></header>
+<section class="pulse-hero compact"><div><span class="eyebrow">КАРТОЧКА СОТРУДНИКА</span><h1><%= employee.character_name||employee.discord_global_name||employee.discord_username||("Сотрудник #"+employee.id) %></h1><p>Единый кадровый профиль и история службы EMS.</p></div><span class="status-pill <%= employee.profile_status==='approved'?'ok':'pending' %>"><%= employee.profile_status %></span></section>
+<section class="stats-grid"><article class="info-card"><span>Discord</span><strong><%= employee.discord_username||"—" %></strong><p><%= employee.discord_global_name||"Связанная учётная запись" %></p></article><article class="info-card"><span>Static ID</span><strong><%= employee.static_id||"—" %></strong><p>Игровой идентификатор</p></article><article class="info-card"><span>Отдел</span><strong><%= employee.department_code||"Не назначен" %></strong><p><%= employee.department_name||"Подразделение не назначено" %></p></article><article class="info-card"><span>Ранг</span><strong><%= employee.rank||"—" %></strong><p>Служебный ранг</p></article></section>
+<% if(saved){ %><div class="form-success">Изменения сохранены и записаны в историю EMS Pulse.</div><% } %><% if(error){ %><div class="form-error"><%= error %></div><% } %>
+<% if(canManage){ %><section class="panel"><div class="panel-heading"><div><span class="eyebrow">PERSONNEL CONTROL</span><h2>Кадровые данные</h2></div><span class="live">Управление доступно</span></div>
+<form method="post" action="/control/employees/<%= employee.id %>" class="personnel-form personnel-grid">
+<label><span>Имя персонажа</span><input class="pulse-input" name="character_name" required maxlength="120" value="<%= employee.character_name||'' %>"></label>
+<label><span>Static ID</span><input class="pulse-input" name="static_id" required maxlength="30" value="<%= employee.static_id||'' %>"></label>
+<label><span>Отдел</span><select class="pulse-input" name="department_code" required><% departments.forEach(d=>{ %><option value="<%= d.code %>" <%= employee.department_code===d.code?'selected':'' %>><%= d.code %> — <%= d.name %></option><% }) %></select></label>
+<label><span>Ранг</span><select class="pulse-input" name="rank" required><% for(let i=1;i<=15;i++){ %><option value="<%= i %>" <%= Number(employee.rank)===i?'selected':'' %>><%= i %></option><% } %></select></label>
+<label><span>Статус профиля</span><select class="pulse-input" name="profile_status"><option value="pending" <%= employee.profile_status==='pending'?'selected':'' %>>Ожидает проверки</option><option value="approved" <%= employee.profile_status==='approved'?'selected':'' %>>Подтверждён</option><option value="rejected" <%= employee.profile_status==='rejected'?'selected':'' %>>Отклонён</option></select></label>
+<label class="check-label"><input type="checkbox" name="is_active" value="true" <%= employee.is_active?'checked':'' %>><span>Активный сотрудник</span></label>
+<label class="wide"><span>Комментарий к изменению</span><input class="pulse-input" name="note" maxlength="500" placeholder="Например: перевод HAD → SD / повышение 8 → 9"></label>
+<div class="wide"><button class="pulse-button" type="submit">Сохранить кадровые данные</button></div></form></section><% } %>
+<section class="panel"><div class="panel-heading"><div><span class="eyebrow">SERVICE HISTORY</span><h2>История службы</h2></div><span class="soon"><%= events.length %> событий</span></div>
+<div class="history-list"><% if(!events.length){ %><div class="empty-state">Кадровых событий пока нет.</div><% } %><% events.forEach(ev=>{ %><article class="history-item"><div><strong><%= ev.event_type==='profile_initialized'?'Первичное заполнение профиля':'Изменение кадровых данных' %></strong><p><%= ev.note||'Изменение зафиксировано EMS Pulse' %></p></div><div class="history-meta"><span><%= ev.actor_name %></span><time><%= new Date(ev.created_at).toLocaleString("ru-RU") %></time></div></article><% }) %></div></section>
+<section class="panel"><div class="panel-heading"><div><span class="eyebrow">SYSTEM</span><h2>Системный профиль</h2></div><span class="<%= employee.is_active?'live':'soon' %>"><%= employee.is_active?'Активен':'Отключён' %></span></div><div class="system-strip"><div><b>Уровень доступа</b><span><%= employee.access_level||"employee" %></span></div><div><b>Роли</b><span><%= employee.roles&&employee.roles.length?employee.roles.join(", "):"Не назначены" %></span></div><div><b>Статус профиля</b><span><%= employee.profile_status||"pending" %></span></div><div><b>Последний вход</b><span><%= employee.last_login_at?new Date(employee.last_login_at).toLocaleString("ru-RU"):"—" %></span></div></div></section>
+</main></body></html>
