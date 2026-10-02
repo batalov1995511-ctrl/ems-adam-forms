@@ -24,11 +24,11 @@ app.use(helmet({contentSecurityPolicy:false}));app.use(express.static(path.join(
 app.use(session({store:new pgSession({pool:getPool(),tableName:"user_sessions",createTableIfMissing:true}),name:"ems.sid",secret:process.env.SESSION_SECRET,resave:false,saveUninitialized:false,proxy:true,cookie:{httpOnly:true,secure:process.env.NODE_ENV==="production",sameSite:"lax",maxAge:86400000}}));
 app.use("/auth",authRoutes);app.use("/forms",formRoutes);app.use("/forms",promotionRoutes);app.use("/forms",blacklistRoutes);app.use("/forms",breakRoutes);app.use("/forms",departmentTransferRoutes);app.use("/forms",staffDepartmentTransferRoutes);app.use(weeklyReportRoutes);app.use(coreRoutes);app.use("/control",controlRoutes);
 app.get("/",(req,res)=>req.session.user?res.redirect("/dashboard"):res.redirect("/auth/discord"));
-app.get("/dashboard",requireAuth,(req,res)=>res.render("dashboard",{user:req.session.user,coreUser:req.session.coreUser||null}));
+app.get("/dashboard",requireAuth,(req,res)=>res.render("dashboard",{user:req.session.user,coreUser:req.session.coreUser||null,permissions:req.session.permissions||[]}));
 app.get("/resignation",(req,res)=>res.redirect("/auth/resignation"));
 app.get("/health",(req,res)=>res.json({status:"ok"}));
 app.get("/ready",async(req,res)=>{try{const db=await healthcheck();res.json({status:"ready",database:true,time:db.now});}catch(e){console.error("Readiness failed:",e.message);res.status(503).json({status:"not_ready",database:false});}});
 app.use((req,res)=>res.status(404).render("error",{status:404,title:"Страница не найдена",message:"Запрошенная страница не существует."}));
 app.use((err,req,res,next)=>{console.error("Server error:",err.message);res.status(500).render("error",{status:500,title:"Ошибка сервера",message:"Не удалось обработать запрос. Попробуйте позже."});});
-const port=process.env.PORT||3000;const server=app.listen(port,()=>console.log("EMS Core started on port",port));
+const port=process.env.PORT||3000;const server=app.listen(port,()=>console.log("EMS Pulse started on port",port));
 async function shutdown(){server.close(async()=>{try{await getPool().end();}finally{process.exit(0);}});}process.on("SIGTERM",shutdown);process.on("SIGINT",shutdown);
